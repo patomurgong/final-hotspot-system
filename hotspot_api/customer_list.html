@@ -1,0 +1,61 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Hotspot Customers ({{ customers.count }})</h6>
+        <a href="{% url 'customer_add' %}" class="btn btn-sm btn-success">
+            <i class="fas fa-plus"></i> Add Customer
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="customersTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Account No</th>
+                        <th>Expenditure</th>
+                        <th>Account Balance</th>
+                        <th>Phone</th>
+                        <th>Joined</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td> 
+                        <td>{{ customer.account_no }}</td>
+                        <td>Ksh {{ customer.expenditure|floatformat:2 }}</td>
+                        <td>Ksh {{ customer.account_balance|floatformat:2 }}</td>
+                        
+                        <td>0{{ customer.phone|slice:"3:" }}</td> 
+                        
+                        <td>{{ customer.joined|date:"Y-m-d H:i" }}</td>
+                        
+                        <td>
+                            <a href="#" class="btn btn-info btn-sm">
+                                <i class="fas fa-info-circle"></i> 
+                            </a>
+                            <button onclick="confirmDelete({{ customer.id }})" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No customers found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

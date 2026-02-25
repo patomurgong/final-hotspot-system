@@ -1,0 +1,145 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block title %}Plan Setup{% endblock %}
+
+{% block content %}
+
+<!-- 
+    Utility functions to format data and time validity for better readability
+    These are implemented in JavaScript for execution in the client-side, 
+    but you could also implement these as Django template filters if needed.
+-->
+<script>
+    /**
+     * Converts minutes to a readable string (e.g., 60 -> 1 Hr, 1440 -> 1 Day).
+     * @param {number} minutes 
+     * @returns {string} Formatted time string.
+     */
+    function formatValidity(minutes) {
+        if (minutes >= 1440 && minutes % 1440 === 0) {
+            const days = minutes / 1440;
+            return days + (days === 1 ? ' Day' : ' Days');
+        } else if (minutes >= 60 && minutes % 60 === 0) {
+            const hours = minutes / 60;
+            return hours + (hours === 1 ? ' Hr' : ' Hrs');
+        } else if (minutes > 0) {
+            return minutes + ' Mins';
+        }
+        return 'N/A';
+    }
+    
+    /**
+     * Converts MB to GB if possible for better readability.
+     * @param {number} mb - Data limit in megabytes.
+     * @returns {string} Formatted data string.
+     */
+    function formatData(mb) {
+        if (mb === 0) {
+            return 'Unlimited'; // Should align with is_unlimited field logic
+        }
+        if (mb >= 1024 && mb % 1024 === 0) {
+            const gb = mb / 1024;
+            return gb + ' GB';
+        }
+        return mb + ' MB';
+    }
+</script>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between bg-success text-white">
+        <h6 class="m-0 font-weight-bold">Hotspot Plan Setup ({{ plans.count }})</h6>
+        <!-- Link to the Django Admin Add New Plan page -->
+        <!-- Requires 'admin:hotspot_api_hotspotplan_add' URL to be available -->
+        <a href="{% url 'admin:hotspot_api_hotspotplan_add' %}" class="btn btn-sm btn-light text-success">
+            <i class="fas fa-plus"></i> Create Plan
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search by Plan, Code, or Price..." id="planSearch">
+            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="plansTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Plan</th>
+                        <th>Code</th>
+                        <th>Unlimited</th>
+                        <th>Data Bundle (MB)</th>
+                        <th>Upload/Download</th>
+                        <th>Validity</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in plans %}
+                    <tr class="{% if not plan.is_active %}table-secondary{% endif %}">
+                        <td>{{ forloop.counter }}</td> 
+                        <td>{{ plan.plan_name }}</td>
+                        <td>{{ plan.code }}</td>
+                        <td>
+                            {% if plan.is_unlimited %}
+                                <span class="badge bg-success text-white">Yes</span>
+                            {% else %}
+                                <span class="badge bg-danger text-white">No</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <!-- Format data limit using JS utility -->
+                            <script>document.write(formatData({{ plan.data_limit_mb }}));</script>
+                        </td>
+                        <td>{{ plan.speed_limit }}</td>
+                        <td>
+                            <!-- Format validity using JS utility -->
+                            <script>document.write(formatValidity({{ plan.validity_minutes }}));</script>
+                        </td>
+                        <td>Ksh {{ plan.price|floatformat:2 }}</td>
+                        <td>
+                            <!-- Edit Button with Icon and Text -->
+                            <a href="{% url 'admin:hotspot_api_hotspotplan_change' plan.id %}" class="btn btn-warning btn-sm me-1" title="Edit Plan">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <!-- Delete Button with Icon and Text -->
+                            <button onclick="confirmDeletePlan('{{ plan.id }}', '{{ plan.plan_name }}')" class="btn btn-danger btn-sm" title="Delete Plan">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center">No active plans found. Click 'Create Plan' to add one.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Placeholder for delete confirmation logic (use a modal in a real app)
+    function confirmDeletePlan(planId, planName) {
+        if (confirm(`Are you sure you want to delete the plan "${planName}"? This action cannot be undone.`)) {
+            // In a real application, you would make an AJAX DELETE request here
+            console.log("Plan deletion requested for ID: " + planId);
+            // Example: fetch('/api/plans/' + planId + '/', { method: 'DELETE' })...
+        }
+    }
+    
+    // Simple table search functionality
+    document.getElementById('planSearch').addEventListener('keyup', function() {
+        const value = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#plansTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(value) ? '' : 'none';
+        });
+    });
+</script>
+
+{% endblock content %}

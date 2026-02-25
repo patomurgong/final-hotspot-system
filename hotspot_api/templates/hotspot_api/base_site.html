@@ -1,0 +1,154 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} - Kirepanet ADMIN{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Kirepanet ADMIN</a></h1>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* Dark mode and sidebar styles */
+    body {
+        background: #1a1a1a !important;
+        color: #e0e0e0 !important;
+    }
+    
+    #header {
+        background: #2c3e50 !important;
+    }
+    
+    #container {
+        display: flex !important;
+        min-height: calc(100vh - 50px);
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    #custom-sidebar {
+        width: 250px;
+        background: #252525;
+        border-right: 1px solid #333;
+        padding: 20px 0;
+        overflow-y: auto;
+        order: -1;
+        flex-shrink: 0;
+    }
+    
+    #custom-sidebar h2 {
+        padding: 0 20px;
+        font-size: 12px;
+        color: #888;
+        text-transform: uppercase;
+        margin: 20px 0 10px 0;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+    
+    #custom-sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #custom-sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        color: #b0b0b0;
+        text-decoration: none;
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+    }
+    
+    #custom-sidebar a:hover {
+        background: #2a2a2a;
+        color: #3498db;
+        border-left-color: #3498db;
+    }
+    
+    #custom-sidebar i {
+        width: 20px;
+        font-size: 14px;
+    }
+    
+    #content {
+        flex: 1;
+        background: #1a1a1a !important;
+        padding: 20px !important;
+    }
+    
+    /* Dark mode for content */
+    .module {
+        background: #252525 !important;
+        border: 1px solid #333 !important;
+    }
+    
+    .module h2, .module caption {
+        background: #2a2a2a !important;
+        color: #fff !important;
+    }
+    
+    table {
+        background: #252525 !important;
+        color: #e0e0e0 !important;
+    }
+    
+    thead th {
+        background: #2a2a2a !important;
+        color: #aaa !important;
+        border-bottom: 2px solid #333 !important;
+    }
+    
+    tbody tr {
+        background: #252525 !important;
+    }
+    
+    tbody tr:hover {
+        background: #2a2a2a !important;
+    }
+    
+    tbody td {
+        border-bottom: 1px solid #333 !important;
+        color: #ccc !important;
+    }
+    
+    input[type="text"], input[type="password"], input[type="email"], 
+    input[type="number"], textarea, select {
+        background: #2a2a2a !important;
+        color: #e0e0e0 !important;
+        border: 1px solid #444 !important;
+    }
+    
+    .breadcrumbs {
+        background: #2a2a2a !important;
+        color: #ccc !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="custom-sidebar">
+    <h2>HOTSPOT_API</h2>
+    <ul>
+        <li><a href="/admin/hotspot_api/hotspotplan/"><i class="fas fa-wifi"></i> Hotspot Plans</a></li>
+        <li><a href="/admin/hotspot_api/hotspotcustomer/"><i class="fas fa-users"></i> Hotspot Customers</a></li>
+        <li><a href="/admin/hotspot_api/mpesatransaction/"><i class="fas fa-money-bill-wave"></i> M-Pesa Transactions</a></li>
+        <li><a href="/admin/hotspot_api/voucher/"><i class="fas fa-ticket-alt"></i> Vouchers</a></li>
+        <li><a href="/admin/hotspot_api/hotspotplan/"><i class="fas fa-wifi"></i> Online Customers</a></li>
+        <li><a href="/admin/hotspot_api/accesspoint/"><i class="fas fa-broadcast-tower"></i> Access Points</a></li>
+        <li><a href="/admin/hotspot_api/device/"><i class="fas fa-mobile-alt"></i> Devices</a></li>
+        <li><a href="/admin/hotspot_api/usagedata/"><i class="fas fa-chart-line"></i> Usage Sessions</a></li>
+    </ul>
+    <h2>AUTHENTICATION</h2>
+    <ul>
+        <li><a href="/admin/auth/user/"><i class="fas fa-user"></i> Users</a></li>
+        <li><a href="/admin/auth/group/"><i class="fas fa-users-cog"></i> Groups</a></li>
+    </ul>
+</div>
+{{ block.super }}
+{% endblock %}
