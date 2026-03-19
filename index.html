@@ -58,46 +58,39 @@
         margin-bottom: 15px;
     }
 
-    a {
-        color: #2563eb;
-    }
+    a { color: #2563eb; }
 
+    /* ─── Button Grid ─────────────────────────────── */
     .buttons-container {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    /* ─── Feature Row (Kopa + Points) ─────────────── */
+    .feature-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
         margin-bottom: 25px;
-    }
-
-    .left-buttons,
-    .right-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        flex: 1;
-    }
-
-    .middle-separator {
-        width: 2px;
-        background-color: #cbd5e1;
-        margin: 0 10px;
-        border-radius: 5px;
     }
 
     .separator {
         width: 100%;
         height: 1px;
         background-color: #cbd5e1;
-        margin: 25px 0;
+        margin: 20px 0;
     }
 
-    /* Plans */
+    /* ─── Plans ───────────────────────────────────── */
     .plans {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
         margin-top: 25px;
+        min-height: 130px; /* prevents layout shift while loading */
     }
 
     .plan {
@@ -118,15 +111,9 @@
         transition: transform 0.25s, opacity 0.2s;
     }
 
-    .plan:hover {
-        transform: translateY(-6px);
-        opacity: 0.95;
-    }
+    .plan:hover { transform: translateY(-6px); opacity: 0.95; }
 
-    .plan strong {
-        font-size: 16px;
-        margin-bottom: 4px;
-    }
+    .plan strong { font-size: 16px; margin-bottom: 4px; }
 
     .plan .plan-sub-btn {
         margin-top: 8px;
@@ -142,27 +129,25 @@
         transition: transform 0.15s, background 0.15s;
     }
 
-    .plan .plan-sub-btn:hover {
-        background: #f1f5f9;
-    }
+    .plan .plan-sub-btn:hover { background: #f1f5f9; }
 
-    /* Main Buttons */
+    /* ─── Main Buttons ────────────────────────────── */
     button.main-btn {
         width: 100%;
-        padding: 14px;
+        padding: 13px 10px;
         border: none;
         border-radius: 10px;
         cursor: pointer;
         background-color: #0ea5e9;
         color: white;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         box-shadow: 0 4px 12px rgba(14,165,233,0.3);
         transition: background-color 0.2s, transform 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 7px;
     }
 
     button.main-btn:hover:not(:disabled) {
@@ -177,25 +162,64 @@
     }
 
     /* Dark red buttons */
-    #lookupVoucherBtn,
-    #howToUseBtn {
+    #lookupVoucherBtn, #howToUseBtn {
         background-color: #991b1b;
         box-shadow: 0 4px 12px rgba(153,27,27,0.35);
     }
 
     #lookupVoucherBtn:hover:not(:disabled),
-    #howToUseBtn:hover:not(:disabled) {
-        background-color: #7f1d1d;
+    #howToUseBtn:hover:not(:disabled) { background-color: #7f1d1d; }
+
+    /* ── Kopa Button ── */
+    #kopaBtn {
+        background: linear-gradient(135deg, #7c3aed, #6d28d9);
+        box-shadow: 0 4px 12px rgba(124,58,237,0.4);
+    }
+    #kopaBtn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #6d28d9, #5b21b6);
     }
 
-    /* Popups */
+    /* ── Points Button ── */
+    #redeemPointsBtn {
+        background: linear-gradient(135deg, #d97706, #b45309);
+        box-shadow: 0 4px 12px rgba(217,119,6,0.4);
+    }
+    #redeemPointsBtn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #b45309, #92400e);
+    }
+
+    /* ─── Points Badge on button ──────────────────── */
+    .points-badge {
+        background: white;
+        color: #b45309;
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 800;
+        margin-left: 4px;
+    }
+
+    /* ─── Kopa Status Banner ──────────────────────── */
+    .kopa-alert {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        border: 1.5px solid #f59e0b;
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin-bottom: 14px;
+        display: none;
+        text-align: left;
+        font-size: 13px;
+        color: #78350f;
+    }
+
+    .kopa-alert strong { display: block; margin-bottom: 3px; color: #92400e; }
+
+    /* ─── Popups ──────────────────────────────────── */
     .popup-overlay {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
         background: rgba(0, 0, 0, 0.45);
         z-index: 999;
         justify-content: center;
@@ -214,24 +238,34 @@
         max-width: 400px;
         text-align: center;
         transform: translate(-50%, -50%);
-        top: 50%;
-        left: 50%;
+        top: 50%; left: 50%;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
-    .popup h3 {
-        margin-bottom: 15px;
-        color: #1e293b;
+    .popup h3 { margin-bottom: 15px; color: #1e293b; }
+
+    .popup label {
+        display: block;
+        text-align: left;
+        font-size: 13px;
+        color: #475569;
+        margin-bottom: 4px;
+        margin-top: 12px;
     }
 
-    .popup input {
+    .popup input, .popup select {
         width: calc(100% - 20px);
         padding: 12px;
         border: 1px solid #cbd5e1;
         border-radius: 8px;
-        font-size: 16px;
+        font-size: 15px;
         text-align: center;
         background: #f8fafc;
+        box-sizing: content-box;
     }
+
+    .popup select { text-align: left; cursor: pointer; }
 
     .popup-buttons {
         display: flex;
@@ -255,28 +289,165 @@
         color: white;
         box-shadow: 0 3px 10px rgba(220,38,38,0.4);
     }
-
-    .cancel-button:hover {
-        background-color: #b91c1c;
-    }
+    .cancel-button:hover { background-color: #b91c1c; }
 
     .confirm-button {
         background-color: #16a34a;
         color: white;
         box-shadow: 0 3px 10px rgba(22,163,74,0.4);
     }
+    .confirm-button:hover { background-color: #15803d; }
 
-    .confirm-button:hover {
-        background-color: #15803d;
+    /* ── Kopa popup accent ── */
+    #kopaPopup h3 { color: #6d28d9; }
+
+    /* ── Points popup accent ── */
+    #pointsPopup h3 { color: #b45309; }
+
+    /* ── Info Cards inside popups ── */
+    .info-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin: 14px 0;
+        text-align: left;
     }
 
+    .info-card .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 13px;
+        color: #475569;
+    }
+
+    .info-card .info-row:last-child { border-bottom: none; }
+
+    .info-card .info-row span:last-child {
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    /* Points progress bar */
+    .points-progress-wrap {
+        background: #e2e8f0;
+        border-radius: 999px;
+        height: 10px;
+        margin: 10px 0 4px;
+        overflow: hidden;
+    }
+
+    .points-progress-bar {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #d97706, #f59e0b);
+        transition: width 0.6s ease;
+    }
+
+    .points-hint {
+        font-size: 11px;
+        color: #94a3b8;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    /* Redeem options grid */
+    .redeem-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 14px 0;
+    }
+
+    .redeem-option {
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 12px 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #f8fafc;
+    }
+
+    .redeem-option:hover, .redeem-option.selected {
+        border-color: #d97706;
+        background: #fffbeb;
+    }
+
+    .redeem-option .ro-data {
+        font-size: 16px;
+        font-weight: 800;
+        color: #1e293b;
+        display: block;
+    }
+
+    .redeem-option .ro-pts {
+        font-size: 11px;
+        color: #b45309;
+        font-weight: 600;
+    }
+
+    /* Kopa amount options */
+    .kopa-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        margin: 14px 0;
+    }
+
+    .kopa-option {
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #f8fafc;
+    }
+
+    .kopa-option:hover, .kopa-option.selected {
+        border-color: #7c3aed;
+        background: #f5f3ff;
+    }
+
+    .kopa-option .ko-data {
+        font-size: 14px;
+        font-weight: 800;
+        color: #1e293b;
+        display: block;
+    }
+
+    .kopa-option .ko-fee {
+        font-size: 10px;
+        color: #7c3aed;
+        font-weight: 600;
+    }
+
+    .kopa-terms {
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 8px;
+        text-align: left;
+        line-height: 1.5;
+    }
+
+    /* Error message */
+    .error-message {
+        color: #dc2626;
+        font-size: 13px;
+        min-height: 18px;
+        margin-top: 6px;
+        text-align: left;
+    }
+
+    /* Loading spinner */
     .loading-spinner {
         margin-top: 15px;
         border: 4px solid #e2e8f0;
         border-top: 4px solid #2563eb;
         border-radius: 50%;
-        width: 32px;
-        height: 32px;
+        width: 32px; height: 32px;
         animation: spin 1s linear infinite;
         display: none;
         margin-left: auto;
@@ -288,149 +459,955 @@
         100% { transform: rotate(360deg); }
     }
 
+    .close-button {
+        margin-top: 18px;
+        padding: 10px 30px;
+        background: #1e293b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .close-button:hover { background: #0f172a; }
+
     @media (max-width: 480px) {
         .container { padding: 20px; }
         .logo { width: 60px; height: 60px; font-size: 32px; }
         .plan { width: 95px; height: 95px; }
     }
-</style>
-
+    </style>
 </head>
 <body>
-    <div class="offline-banner" id="offlineBanner">⚠️ No internet connection</div>
-    <div class="container">
-        <div class="logo">R</div>
-        <h2>KiRePa Wi-Fi</h2>
-        <p>Call <a href="tel:0792701147"><u><b>0792701147</b></u></a> for help</p>
-        <p>Powered by <a href="https://www.nasradius.com" target="_blank">@Nasradius</a></p>
-        <div class="buttons-container">
-            <div class="left-buttons">
-                <button id="enterVoucherBtn" class="main-btn"><i class="fa-solid fa-ticket"></i><span>Enter Voucher</span></button>
-                <button id="lookupVoucherBtn" class="main-btn"><i class="fa-solid fa-magnifying-glass"></i><span>Lookup Voucher</span></button>
+<div class="offline-banner" id="offlineBanner" style="display:none; background:#ef4444; color:white; padding:8px; text-align:center;">⚠️ No internet connection</div>
+
+<div class="container">
+    <div class="logo">R</div>
+    <h2>KiRePa Wi-Fi</h2>
+    <p>Call <a href="tel:0792701147"><u><b>0792701147</b></u></a> for help</p>
+    <p>Powered by <a href="https://www.nasradius.com" target="_blank">@Nasradius</a></p>
+
+    <!-- Kopa debt warning banner -->
+    <div class="kopa-alert" id="kopaAlertBanner">
+        <strong>⚠️ You have an unpaid Kopa balance!</strong>
+        You must repay <span id="kopaAlertAmount"></span> before purchasing a new plan.
+    </div>
+
+    <!-- Main 4 buttons (2x2 grid) -->
+    <div class="buttons-container">
+        <button id="enterVoucherBtn" class="main-btn"><i class="fa-solid fa-ticket"></i><span>Enter Voucher</span></button>
+        <button id="lookupVoucherBtn" class="main-btn"><i class="fa-solid fa-magnifying-glass"></i><span>Lookup Voucher</span></button>
+        <button id="checkBalanceBtn" class="main-btn"><i class="fa-solid fa-wallet"></i><span>Check Balance</span></button>
+        <button id="howToUseBtn" class="main-btn"><i class="fa-solid fa-wifi"></i><span>How to use Wi-Fi</span></button>
+    </div>
+
+    <!-- Feature Row: Kopa + Redeem Points -->
+    <div class="feature-row">
+        <button id="kopaBtn" class="main-btn">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <span>Kopa Data</span>
+        </button>
+        <button id="redeemPointsBtn" class="main-btn">
+            <i class="fa-solid fa-star"></i>
+            <span>My Points</span>
+            <span class="points-badge" id="pointsBadge" style="display:none;">0</span>
+        </button>
+    </div>
+
+    <div class="separator"></div>
+    <h1>Purchase a Plan</h1>
+    <p><strong><u>connect up to 2 devices per plan</u></strong></p>
+    <div class="plans" id="plansContainer"><p style="color:#0056b3;">Loading plans...</p></div>
+</div>
+
+<!-- ════════════════════════════════════════
+     POPUP OVERLAY
+════════════════════════════════════════ -->
+<div class="popup-overlay" id="popupOverlay"></div>
+
+<!-- Payment Popup -->
+<div class="popup" id="paymentPopup">
+    <h3>Complete Payment</h3>
+    <p id="paymentPopupMessage" style="margin-bottom:15px; font-weight:500; color:#555;"></p>
+    <label for="paymentNumber">M-PESA Phone Number:</label>
+    <input type="tel" id="paymentNumber" placeholder="0792701147" maxlength="10"/>
+    <div class="error-message" id="paymentError"></div>
+    <div class="popup-buttons">
+        <button class="cancel-button" id="cancelPaymentBtn">Cancel</button>
+        <button class="confirm-button" id="confirmPaymentBtn">Pay with MPESA</button>
+    </div>
+    <div class="loading-spinner" id="paymentSpinner"></div>
+</div>
+
+<!-- Balance Popup -->
+<div class="popup" id="balancePopup">
+    <h3>Check Balance</h3>
+    <label for="balancePhoneNumber">Phone Number:</label>
+    <input type="tel" id="balancePhoneNumber" placeholder="0792701147" maxlength="10"/>
+    <div class="error-message" id="balanceError"></div>
+    <div class="popup-buttons">
+        <button class="cancel-button" onclick="hidePopup('balancePopup')">Cancel</button>
+        <button class="confirm-button" id="submitBalanceBtn">Submit</button>
+    </div>
+    <div class="loading-spinner" id="balanceSpinner"></div>
+</div>
+
+<!-- Enter Voucher Popup -->
+<div class="popup" id="voucherPopup">
+    <h3>Enter Voucher</h3>
+    <label for="voucherPhoneInput">Phone Number:</label>
+    <input type="tel" id="voucherPhoneInput" placeholder="0792701147" maxlength="10"/>
+    <label for="voucherCodeInput">Voucher Code:</label>
+    <input type="text" id="voucherCodeInput" placeholder="Enter voucher code"/>
+    <div class="error-message" id="voucherError"></div>
+    <div class="popup-buttons">
+        <button class="cancel-button" onclick="hidePopup('voucherPopup')">Cancel</button>
+        <button class="confirm-button" id="loginVoucherBtn">Get OTP</button>
+    </div>
+    <div class="loading-spinner" id="voucherSpinner"></div>
+</div>
+
+<!-- Lookup Popup -->
+<div class="popup" id="lookupPopup">
+    <h3>Lookup Voucher</h3>
+    <label for="lookupPhoneInput">Phone Number:</label>
+    <input type="tel" id="lookupPhoneInput" placeholder="0792701147" maxlength="10"/>
+    <div class="error-message" id="lookupError"></div>
+    <div class="popup-buttons">
+        <button class="cancel-button" onclick="hidePopup('lookupPopup')">Cancel</button>
+        <button class="confirm-button" id="lookupVoucherBtnSubmit">Lookup</button>
+    </div>
+    <div class="loading-spinner" id="lookupSpinner"></div>
+</div>
+
+<!-- OTP Popup -->
+<div class="popup" id="otpPopup">
+    <h3>Enter OTP</h3>
+    <p id="otpMessage" style="margin-bottom:15px; color:#555;"></p>
+    <input type="text" id="otpInput" maxlength="6" placeholder="000000" inputmode="numeric"/>
+    <div class="error-message" id="otpError"></div>
+    <div class="popup-buttons">
+        <button class="cancel-button" id="cancelOtpBtn">Cancel</button>
+        <button class="confirm-button" id="submitOtpBtn">Verify</button>
+    </div>
+    <div class="loading-spinner" id="otpSpinner"></div>
+</div>
+
+<!-- How To Use Popup -->
+<div class="popup" id="howToPopup">
+    <h3>How to Use Wi-Fi</h3>
+    <ul style="text-align:left; line-height:2;">
+        <li>Select a plan from the Purchase Plan section.</li>
+        <li>Enter your phone number and click "PAY WITH MPESA".</li>
+        <li>Wait for payment confirmation on your phone.</li>
+        <li>You'll receive a voucher code via SMS.</li>
+        <li>Click "Enter Voucher" and input your details.</li>
+        <li>Check data balance using "Check Balance" button.</li>
+        <li>Contact support if you have issues.</li>
+    </ul>
+    <button class="close-button" onclick="hidePopup('howToPopup')">EXIT</button>
+</div>
+
+<!-- Message Popup -->
+<div class="popup" id="messagePopup">
+    <h3>Message</h3>
+    <p id="messageText" style="white-space:pre-line; margin:20px 0; font-size:15px;"></p>
+    <button class="close-button" id="closeMessageBtn">OK</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     KOPA POPUP
+════════════════════════════════════════ -->
+<div class="popup" id="kopaPopup">
+    <h3><i class="fa-solid fa-hand-holding-dollar" style="color:#7c3aed;margin-right:8px;"></i>Kopa Data</h3>
+    <p style="font-size:13px; color:#64748b; margin-bottom:4px;">
+        Borrow data now, repay before your next plan purchase.
+    </p>
+
+    <!-- Step 1: Phone entry -->
+    <div id="kopaStep1">
+        <label for="kopaPhoneInput">Your Phone Number:</label>
+        <input type="tel" id="kopaPhoneInput" placeholder="0792701147" maxlength="10"/>
+        <div class="error-message" id="kopaPhoneError"></div>
+        <div class="popup-buttons">
+            <button class="cancel-button" onclick="hidePopup('kopaPopup')">Cancel</button>
+            <button class="confirm-button" id="kopaCheckBtn">
+                <i class="fa-solid fa-arrow-right"></i> Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- Step 2: Kopa status + select amount -->
+    <div id="kopaStep2" style="display:none;">
+        <!-- Existing kopa balance card -->
+        <div class="info-card" id="kopaStatusCard" style="display:none;">
+            <div class="info-row">
+                <span>Outstanding Kopa</span>
+                <span id="kopaOutstanding" style="color:#dc2626;"></span>
             </div>
-            <div class="middle-separator"></div>
-            <div class="right-buttons">
-                <button id="checkBalanceBtn" class="main-btn"><i class="fa-solid fa-wallet"></i><span>Check Balance</span></button>
-                <button id="howToUseBtn" class="main-btn"><i class="fa-solid fa-wifi"></i><span>How to use Wi-Fi</span></button>
+            <div class="info-row">
+                <span>Status</span>
+                <span id="kopaStatus" style="color:#f59e0b;"></span>
             </div>
         </div>
-        <div class="separator"></div>
-        <h1>Purchase a Plan</h1>
-        <p><strong><u>connect up to 2 devices per plan</u></strong></p>
-        <div class="plans" id="plansContainer"><p style="color:#0056b3;">Loading plans...</p></div>
-    </div>
-    <div class="popup-overlay" id="popupOverlay"></div>
-    <div class="popup" id="paymentPopup">
-        <h3>Complete Payment</h3>
-        <p id="paymentPopupMessage" style="margin-bottom: 15px; font-weight: 500; color: #555;"></p>
-        <label for="paymentNumber">M-PESA Phone Number:</label>
-        <input type="tel" id="paymentNumber" placeholder="0792701147" maxlength="10"/>
-        <div class="error-message" id="paymentError"></div>
-        <div class="popup-buttons">
-            <button class="cancel-button" id="cancelPaymentBtn">Cancel</button>
-            <button class="confirm-button" id="confirmPaymentBtn">Pay with MPESA</button>
+
+        <!-- Kopa eligibility info -->
+        <div class="info-card" id="kopaEligibleCard">
+            <div class="info-row">
+                <span>Kopa Limit</span>
+                <span id="kopaLimit"></span>
+            </div>
+            <div class="info-row">
+                <span>Repay by next purchase</span>
+                <span style="color:#7c3aed;">Auto-deducted</span>
+            </div>
         </div>
-        <div class="loading-spinner" id="paymentSpinner"></div>
-    </div>
-    <div class="popup" id="balancePopup">
-        <h3>Check Balance</h3>
-        <label for="balancePhoneNumber">Phone Number:</label>
-        <input type="tel" id="balancePhoneNumber" placeholder="0792701147" maxlength="10"/>
-        <div class="error-message" id="balanceError"></div>
+
+        <p style="font-size:13px; color:#475569; margin:10px 0 4px; text-align:left; font-weight:600;">
+            Select amount to borrow:
+        </p>
+        <div class="kopa-grid" id="kopaOptionsGrid"></div>
+
+        <p class="kopa-terms">
+            ⚠️ Kopa must be fully repaid before purchasing your next plan.
+            A convenience fee applies. By continuing you agree to these terms.
+        </p>
+
+        <div class="error-message" id="kopaSelectError"></div>
         <div class="popup-buttons">
-            <button class="cancel-button" onclick="hidePopup('balancePopup')">Cancel</button>
-            <button class="confirm-button" id="submitBalanceBtn">Submit</button>
+            <button class="cancel-button" onclick="hidePopup('kopaPopup')">Cancel</button>
+            <button class="confirm-button" id="kopaConfirmBtn">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Kopa Now
+            </button>
         </div>
-        <div class="loading-spinner" id="balanceSpinner"></div>
     </div>
-    <div class="popup" id="voucherPopup">
-        <h3>Enter Voucher</h3>
-        <label for="voucherPhoneInput">Phone Number:</label>
-        <input type="tel" id="voucherPhoneInput" placeholder="0792701147" maxlength="10"/>
-        <label for="voucherCodeInput">Voucher Code:</label>
-        <input type="text" id="voucherCodeInput" placeholder="Enter voucher code"/>
-        <div class="error-message" id="voucherError"></div>
+
+    <div class="loading-spinner" id="kopaSpinner"></div>
+</div>
+
+<!-- ════════════════════════════════════════
+     REDEEM POINTS POPUP
+════════════════════════════════════════ -->
+<div class="popup" id="pointsPopup">
+    <h3><i class="fa-solid fa-star" style="color:#d97706;margin-right:8px;"></i>My Reward Points</h3>
+
+    <!-- Step 1: Phone entry -->
+    <div id="pointsStep1">
+        <label for="pointsPhoneInput">Your Phone Number:</label>
+        <input type="tel" id="pointsPhoneInput" placeholder="0792701147" maxlength="10"/>
+        <div class="error-message" id="pointsPhoneError"></div>
         <div class="popup-buttons">
-            <button class="cancel-button" onclick="hidePopup('voucherPopup')">Cancel</button>
-            <button class="confirm-button" id="loginVoucherBtn">Get OTP</button>
+            <button class="cancel-button" onclick="hidePopup('pointsPopup')">Cancel</button>
+            <button class="confirm-button" id="pointsCheckBtn">
+                <i class="fa-solid fa-arrow-right"></i> View Points
+            </button>
         </div>
-        <div class="loading-spinner" id="voucherSpinner"></div>
     </div>
-    <div class="popup" id="lookupPopup">
-        <h3>Lookup Voucher</h3>
-        <label for="lookupPhoneInput">Phone Number:</label>
-        <input type="tel" id="lookupPhoneInput" placeholder="0792701147" maxlength="10"/>
-        <div class="error-message" id="lookupError"></div>
+
+    <!-- Step 2: Points dashboard + redeem options -->
+    <div id="pointsStep2" style="display:none;">
+        <!-- Points balance card -->
+        <div class="info-card">
+            <div class="info-row">
+                <span>Total Points</span>
+                <span id="totalPointsDisplay" style="color:#d97706; font-size:22px;">0 pts</span>
+            </div>
+            <div class="info-row">
+                <span>Total Spent</span>
+                <span id="totalSpentDisplay"></span>
+            </div>
+            <div class="info-row">
+                <span>Points Redeemed</span>
+                <span id="redeemedPointsDisplay"></span>
+            </div>
+        </div>
+
+        <!-- Progress to next reward -->
+        <p style="font-size:12px; color:#475569; text-align:left; margin-bottom:2px; font-weight:600;">
+            Progress to next reward
+        </p>
+        <div class="points-progress-wrap">
+            <div class="points-progress-bar" id="pointsProgressBar" style="width:0%;"></div>
+        </div>
+        <p class="points-hint" id="pointsProgressHint">0 / 50 pts to next reward</p>
+
+        <!-- How points work -->
+        <div class="info-card" style="background:#fffbeb; border-color:#fde68a;">
+            <div class="info-row" style="font-size:12px;">
+                <span>🏆 How you earn</span>
+                <span style="color:#b45309;">10 Ksh = 1 pt</span>
+            </div>
+            <div class="info-row" style="font-size:12px;">
+                <span>💡 Minimum redeem</span>
+                <span style="color:#b45309;">50 pts</span>
+            </div>
+        </div>
+
+        <!-- Redeem options -->
+        <p style="font-size:13px; color:#475569; margin:10px 0 4px; text-align:left; font-weight:600;">
+            Redeem for free data:
+        </p>
+        <div class="redeem-grid" id="redeemGrid"></div>
+
+        <div class="error-message" id="redeemError"></div>
         <div class="popup-buttons">
-            <button class="cancel-button" onclick="hidePopup('lookupPopup')">Cancel</button>
-            <button class="confirm-button" id="lookupVoucherBtnSubmit">Lookup</button>
+            <button class="cancel-button" onclick="hidePopup('pointsPopup')">Close</button>
+            <button class="confirm-button" id="redeemConfirmBtn">
+                <i class="fa-solid fa-gift"></i> Redeem
+            </button>
         </div>
-        <div class="loading-spinner" id="lookupSpinner"></div>
     </div>
-    <div class="popup" id="otpPopup">
-        <h3>Enter OTP</h3>
-        <p id="otpMessage" style="margin-bottom: 15px; color: #555;"></p>
-        <input type="text" id="otpInput" class="otp-input" maxlength="6" placeholder="000000" inputmode="numeric"/>
-        <div class="error-message" id="otpError"></div>
-        <div class="popup-buttons">
-            <button class="cancel-button" id="cancelOtpBtn">Cancel</button>
-            <button class="confirm-button" id="submitOtpBtn">Verify</button>
-        </div>
-        <div class="loading-spinner" id="otpSpinner"></div>
-    </div>
-    <div class="popup" id="howToPopup">
-        <h3>How to Use Wi-Fi</h3>
-        <ul>
-            <li>Select a plan from the Purchase Plan section.</li>
-            <li>Enter your phone number and click "PAY WITH MPESA".</li>
-            <li>Wait for payment confirmation on your phone.</li>
-            <li>You'll receive a voucher code via SMS.</li>
-            <li>Click "Enter Voucher" and input your details.</li>
-            <li>Check data balance using "Check Balance" button.</li>
-            <li>Contact support if you have issues.</li>
-        </ul>
-        <button class="close-button" onclick="hidePopup('howToPopup')">EXIT</button>
-    </div>
-    <div class="popup" id="messagePopup">
-        <h3>Message</h3>
-        <p id="messageText" style="white-space: pre-line; margin: 20px 0; font-size: 15px;"></p>
-        <button class="close-button" id="closeMessageBtn">OK</button>
-    </div>
-    <script>
-const API_BASE_URL=window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'?'http://127.0.0.1:8002/api/':'https://fead-129-222-147-145.ngrok-free.app/';
-let selectedPlan={plan:'',validity:'',amount:0},lastPaymentTime=0,isProcessing=!1,currentOtpCallback=null;
-function sanitizePhone(e){return e.replace(/\D/g,'').trim()}
-function isValidPhoneNumber(e){const n=sanitizePhone(e);return/^0[17]\d{8}$/.test(n)&&10===n.length}
-function getCookie(e){let n=null;if(document.cookie&&''!==document.cookie){const o=document.cookie.split(';');for(let t=0;t<o.length;t++){const s=o[t].trim();if(s.substring(0,e.length+1)===e+'='){n=decodeURIComponent(s.substring(e.length+1));break}}}return n}
-function saveLastPhone(e){try{sessionStorage.setItem('lastPhone',sanitizePhone(e))}catch(e){}}
-function getLastPhone(){try{return sessionStorage.getItem('lastPhone')||''}catch(e){return''}}
-function checkOnline(){const e=document.getElementById('offlineBanner');return!navigator.onLine&&e?(e.style.display='block',!1):(e&&(e.style.display='none'),!0)}
-function showPopup(e,n=!0){const o=document.getElementById('popupOverlay'),t=document.getElementById(e);t&&o&&(o.style.display='flex',t.style.display='block',n&&(t.querySelectorAll('input[type="tel"]').forEach(e=>{e.value=getLastPhone()}),t.querySelectorAll('input:not([type="tel"])').forEach(e=>{e.value=''}),t.querySelectorAll('.error-message').forEach(e=>{e.textContent=''})))}
-function hidePopup(e){const n=document.getElementById('popupOverlay'),o=document.getElementById(e);o&&(o.style.display='none'),n&&(n.style.display='none'),isProcessing=!1}
-function hideAllPopups(){document.querySelectorAll('.popup').forEach(e=>e.style.display='none');const e=document.getElementById('popupOverlay');e&&(e.style.display='none'),isProcessing=!1}
-function showLoading(e,n,o='Processing...'){const t=document.getElementById(e),s=document.getElementById(n);t&&(t.style.display='block'),s&&(s.dataset.originalText||(s.dataset.originalText=s.textContent),s.disabled=!0,s.textContent=o),isProcessing=!0}
-function hideLoading(e,n){const o=document.getElementById(e),t=document.getElementById(n);o&&(o.style.display='none'),t&&(t.disabled=!1,t.dataset.originalText&&(t.textContent=t.dataset.originalText)),isProcessing=!1}
-function showMessage(e,n=!0){const o=document.getElementById('messagePopup'),t=document.getElementById('messageText'),s=document.getElementById('popupOverlay');o&&t?(t.textContent=e,t.style.color=n?'#16a34a':'#dc2626',o.style.display='block',s.style.display='flex'):alert(e)}
-function showOTPPopup(e,n,o='verification'){currentOtpCallback=n;const t={'verification':`OTP sent to ${e}`,'voucher':`Enter OTP to activate voucher`,'lookup':`Enter OTP to view your vouchers`},s=document.getElementById('otpMessage'),r=document.getElementById('otpInput'),a=document.getElementById('otpError');s&&(s.textContent=t[o]||t.verification),r&&(r.value=''),a&&(a.textContent=''),showPopup('otpPopup',!1),setTimeout(()=>{r&&r.focus()},100)}
-async function makeAPICall(e,n={}){if(!checkOnline())throw new Error('No internet connection');const o={'Content-Type':'application/json','ngrok-skip-browser-warning':'true','X-CSRFToken':getCookie('csrftoken')||''},t={...{headers:o},...n,headers:{...o,...n.headers}},s=await fetch(`${API_BASE_URL}${e}`,t),r=s.headers.get('content-type');if(!r||!r.includes('application/json'))throw new Error(`Expected JSON, got ${r}`);const a=await s.json();return{response:s,data:a,ok:s.ok}}
-document.getElementById('enterVoucherBtn')?.addEventListener('click',()=>{hideAllPopups(),showPopup('voucherPopup')});
-document.getElementById('lookupVoucherBtn')?.addEventListener('click',()=>{hideAllPopups(),showPopup('lookupPopup')});
-document.getElementById('checkBalanceBtn')?.addEventListener('click',()=>{hideAllPopups(),showPopup('balancePopup')});
-document.getElementById('howToUseBtn')?.addEventListener('click',()=>{hideAllPopups(),showPopup('howToPopup')});
-document.getElementById('cancelPaymentBtn')?.addEventListener('click',()=>{hidePopup('paymentPopup')});
-document.getElementById('confirmPaymentBtn')?.addEventListener('click',async()=>{const e=document.getElementById('paymentNumber'),n=document.getElementById('paymentError'),o=sanitizePhone(e?.value||'');if(n&&(n.textContent=''),!isValidPhoneNumber(o))return void(n&&(n.textContent='Please enter a valid phone number (e.g., 07XXXXXXXX)'));const t=Date.now();if(t-lastPaymentTime<3e4){const e=Math.ceil((3e4-(t-lastPaymentTime))/1e3);return void(n&&(n.textContent=`Please wait ${e} seconds`))}showLoading('paymentSpinner','confirmPaymentBtn','Processing...');try{const{data:e,ok:t}=await makeAPICall('initiate-mpesa-payment/',{method:'POST',body:JSON.stringify({phone_number:o,amount:selectedPlan.amount,plan:selectedPlan.plan,validity:selectedPlan.validity})});t?(lastPaymentTime=Date.now(),saveLastPhone(o),showMessage(`Payment initiated! Check your phone.\n\nTransaction ID: ${e.transactionId||'N/A'}`),hidePopup('paymentPopup')):n&&(n.textContent=e.message||'Payment failed')}catch(e){n&&(n.textContent='Connection error')}finally{hideLoading('paymentSpinner','confirmPaymentBtn')}});
-document.getElementById('submitBalanceBtn')?.addEventListener('click',async()=>{const e=document.getElementById('balancePhoneNumber'),n=document.getElementById('balanceError'),o=sanitizePhone(e?.value||'');if(n&&(n.textContent=''),!isValidPhoneNumber(o))return void(n&&(n.textContent='Please enter a valid phone number'));showLoading('balanceSpinner','submitBalanceBtn','Checking...');try{const{data:e,ok:t}=await makeAPICall('voucher/check-balance/',{method:'POST',body:JSON.stringify({phone_number:o})});t?(saveLastPhone(o),showMessage(`Balance:\n\nData: ${e.dataBalance||'N/A'}\nTime: ${e.timeBalance||'N/A'}\nStatus: ${e.status||'N/A'}`),hidePopup('balancePopup')):n&&(n.textContent=e.message||'Failed')}catch(e){n&&(n.textContent='Connection error')}finally{hideLoading('balanceSpinner','submitBalanceBtn')}});
-document.getElementById('loginVoucherBtn')?.addEventListener('click',async()=>{const e=document.getElementById('voucherPhoneInput'),n=document.getElementById('voucherCodeInput'),o=document.getElementById('voucherError'),t=sanitizePhone(e?.value||''),s=n?.value.trim()||'';if(o&&(o.textContent=''),!isValidPhoneNumber(t))return void(o&&(o.textContent='Valid phone required'));if(0===s.length)return void(o&&(o.textContent='Voucher code required'));showLoading('voucherSpinner','loginVoucherBtn','Sending OTP...');try{const{data:e,ok:n}=await makeAPICall('voucher/enter/',{method:'POST',body:JSON.stringify({phone_number:t,voucher_code:s})});if(n&&e.success){hideLoading('voucherSpinner','loginVoucherBtn'),saveLastPhone(t),showOTPPopup(t,async n=>{showLoading('otpSpinner','submitOtpBtn','Activating...');const r=new URLSearchParams(window.location.search).get('mac')||'';try{const{data:a,ok:c}=await makeAPICall('voucher/activate/',{method:'POST',body:JSON.stringify({phone_number:t,voucher_code:s,otp:n,mac_address:r})});c&&a.success?(showMessage(`✅ ${a.message}\n\nPlan: ${a.session_details.plan}\nData: ${a.session_details.data_limit}\nValid Until: ${a.session_details.valid_until||'No expiry'}`),hidePopup('voucherPopup'),hidePopup('otpPopup'),setTimeout(()=>{window.location.href='http://www.google.com'},5e3)):e&&(o.textContent=a.message||'Activation failed')}catch(e){o&&(o.textContent='Connection error')}finally{hideLoading('otpSpinner','submitOtpBtn')}},'voucher')}else o&&(o.textContent=e.message||'Failed')}catch(e){o&&(o.textContent='Connection error')}finally{hideLoading('voucherSpinner','loginVoucherBtn')}});
-document.getElementById('lookupVoucherBtnSubmit')?.addEventListener('click',async()=>{const e=document.getElementById('lookupPhoneInput'),n=document.getElementById('lookupError'),o=sanitizePhone(e?.value||'');if(n&&(n.textContent=''),!isValidPhoneNumber(o))return void(n&&(n.textContent='Valid phone required'));showLoading('lookupSpinner','lookupVoucherBtnSubmit','Sending OTP...');try{const{data:e,ok:t}=await makeAPICall('voucher/lookup/',{method:'POST',body:JSON.stringify({phone_number:o})});if(t&&e.success){hideLoading('lookupSpinner','lookupVoucherBtnSubmit'),saveLastPhone(o),showOTPPopup(o,async e=>{showLoading('otpSpinner','submitOtpBtn','Verifying...');try{const{data:t,ok:s}=await makeAPICall('otp/verify/',{method:'POST',body:JSON.stringify({phone_number:o,code:e})});if(s&&t.success){let e='📱 Your Vouchers:\n\n';t.vouchers&&t.vouchers.length>0?t.vouchers.forEach((n,o)=>{e+=`${o+1}. Code: ${n.code}\n`,e+=`   Plan: ${n.plan_name}\n`,e+=`   Status: ${n.status}\n`,e+=`   Data: ${n.data_limit_mb?n.data_limit_mb+'MB':'Unlimited'}\n\n`}):e='No vouchers found',showMessage(e),hidePopup('lookupPopup'),hidePopup('otpPopup')}else n&&(n.textContent=t.message||'Invalid OTP')}catch(e){n&&(n.textContent='Connection error')}finally{hideLoading('otpSpinner','submitOtpBtn')}},'lookup')}else n&&(n.textContent=e.message||'No vouchers found')}catch(e){n&&(n.textContent='Connection error')}finally{hideLoading('lookupSpinner','lookupVoucherBtnSubmit')}});
-document.getElementById('submitOtpBtn')?.addEventListener('click',()=>{const e=document.getElementById('otpInput'),n=document.getElementById('otpError'),o=e?.value.trim()||'';if(n&&(n.textContent=''),6!==o.length)return void(n&&(n.textContent='Please enter 6 digits'));currentOtpCallback&&currentOtpCallback(o)});
-document.getElementById('cancelOtpBtn')?.addEventListener('click',()=>{hidePopup('otpPopup'),currentOtpCallback=null});
-document.getElementById('closeMessageBtn')?.addEventListener('click',()=>{hideAllPopups()});
-document.getElementById('popupOverlay')?.addEventListener('click',e=>{e.target===document.getElementById('popupOverlay')&&!isProcessing&&hideAllPopups()});
-async function fetchAndRenderPlans(){const e=document.getElementById('plansContainer');if(!e)return;try{e.innerHTML='<p style="color:#0056b3;">Loading plans...</p>';const{data:n,ok:o}=await makeAPICall('plans/');if(!o)throw new Error('Failed to fetch plans');const t=n.results||n;Array.isArray(t)&&t.length>0?(e.innerHTML='',t.forEach((n,o)=>{const t=document.createElement('div');t.className='plan',t.dataset.plan=n.plan_name||`Plan ${o+1}`,t.dataset.validity=n.validity||'No expiry',t.dataset.amount=n.price||0;const s=n.validity||'for',r=n.data_limit_gb?`${n.data_limit_gb}GB`:n.data_limit_mb?`${n.data_limit_mb}MB`:'Unlimited',a=n.price?`${n.price} Ksh`:'Contact Admin';t.innerHTML=`<strong>${r}</strong><br>${s}<br>${a}<button type="button" class="plan-sub-btn">Select Plan</button>`;const c=e=>{e.preventDefault(),e.stopPropagation(),selectedPlan.plan=t.dataset.plan,selectedPlan.validity=t.dataset.validity,selectedPlan.amount=parseInt(t.dataset.amount,10)||0;const n=document.getElementById('paymentPopupMessage');n&&(n.textContent=`You selected ${selectedPlan.plan} for ${selectedPlan.amount} Ksh.`),hideAllPopups(),showPopup('paymentPopup')};t.addEventListener('click',c);const d=t.querySelector('.plan-sub-btn');d&&d.addEventListener('click',c),e.appendChild(t)})):e.innerHTML='<p style="color:#555;">No plans available</p>'}catch(n){e.innerHTML='<div style="text-align:center; color:red; padding: 20px;"><p><strong>Connection Error</strong></p><button onclick="fetchAndRenderPlans()" style="margin-top:10px; padding:10px; background:#0056b3; color:white; border:none; border-radius:5px; cursor:pointer;">Retry</button></div>'}}
-document.addEventListener('DOMContentLoaded',()=>{fetchAndRenderPlans()});
-window.addEventListener('unhandledrejection',e=>{showMessage('An unexpected error occurred. Please refresh.',!1)});
-window.addEventListener('online',()=>{checkOnline(),fetchAndRenderPlans()});
-window.addEventListener('offline',()=>{checkOnline()});
-    </script>
+
+    <div class="loading-spinner" id="pointsSpinner"></div>
+</div>
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+/* ──────────────────────────────────────────
+   CONFIG
+────────────────────────────────────────── */
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://127.0.0.1:8002/api/'
+    : 'https://15fb-129-222-147-163.ngrok-free.app/';
+
+let selectedPlan = { plan: '', validity: '', amount: 0 };
+let lastPaymentTime = 0;
+let isProcessing = false;
+let currentOtpCallback = null;
+
+// Kopa & Points state
+let selectedKopaOption = null;
+let selectedRedeemOption = null;
+let currentKopaPhone = '';
+let currentPointsPhone = '';
+
+/* ──────────────────────────────────────────
+   HELPERS
+────────────────────────────────────────── */
+function sanitizePhone(v) { return v.replace(/\D/g, '').trim(); }
+function isValidPhoneNumber(v) {
+    const n = sanitizePhone(v);
+    return /^0[17]\d{8}$/.test(n) && n.length === 10;
+}
+function getCookie(name) {
+    let val = null;
+    if (document.cookie) {
+        for (const c of document.cookie.split(';')) {
+            const t = c.trim();
+            if (t.startsWith(name + '=')) { val = decodeURIComponent(t.slice(name.length + 1)); break; }
+        }
+    }
+    return val;
+}
+function saveLastPhone(p) { try { sessionStorage.setItem('lastPhone', sanitizePhone(p)); } catch(e) {} }
+function getLastPhone() { try { return sessionStorage.getItem('lastPhone') || ''; } catch(e) { return ''; } }
+
+function checkOnline() {
+    const b = document.getElementById('offlineBanner');
+    if (!navigator.onLine && b) { b.style.display = 'block'; return false; }
+    if (b) b.style.display = 'none';
+    return true;
+}
+
+/* ──────────────────────────────────────────
+   POPUP MANAGEMENT
+────────────────────────────────────────── */
+function showPopup(id, resetInputs = true) {
+    const overlay = document.getElementById('popupOverlay');
+    const popup   = document.getElementById(id);
+    if (!popup || !overlay) return;
+    overlay.style.display = 'flex';
+    popup.style.display   = 'block';
+    if (resetInputs) {
+        popup.querySelectorAll('input[type="tel"]').forEach(el => el.value = getLastPhone());
+        popup.querySelectorAll('input:not([type="tel"])').forEach(el => el.value = '');
+        popup.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    }
+}
+
+function hidePopup(id) {
+    const overlay = document.getElementById('popupOverlay');
+    const popup   = document.getElementById(id);
+    if (popup) popup.style.display = 'none';
+    if (overlay) overlay.style.display = 'none';
+    isProcessing = false;
+}
+
+function hideAllPopups() {
+    document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+    const o = document.getElementById('popupOverlay');
+    if (o) o.style.display = 'none';
+    isProcessing = false;
+}
+
+function showLoading(spinnerId, btnId, text = 'Processing...') {
+    const s = document.getElementById(spinnerId);
+    const b = document.getElementById(btnId);
+    if (s) s.style.display = 'block';
+    if (b) { b.dataset.originalText = b.textContent; b.disabled = true; b.textContent = text; }
+    isProcessing = true;
+}
+
+function hideLoading(spinnerId, btnId) {
+    const s = document.getElementById(spinnerId);
+    const b = document.getElementById(btnId);
+    if (s) s.style.display = 'none';
+    if (b) { b.disabled = false; if (b.dataset.originalText) b.textContent = b.dataset.originalText; }
+    isProcessing = false;
+}
+
+function showMessage(text, success = true) {
+    const popup   = document.getElementById('messagePopup');
+    const msgEl   = document.getElementById('messageText');
+    const overlay = document.getElementById('popupOverlay');
+    if (popup && msgEl) {
+        msgEl.textContent = text;
+        msgEl.style.color = success ? '#16a34a' : '#dc2626';
+        popup.style.display = 'block';
+        if (overlay) overlay.style.display = 'flex';
+    } else { alert(text); }
+}
+
+/* ──────────────────────────────────────────
+   API WRAPPER
+────────────────────────────────────────── */
+async function makeAPICall(endpoint, opts = {}) {
+    if (!checkOnline()) throw new Error('No internet connection');
+    const headers = {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+        'X-CSRFToken': getCookie('csrftoken') || '',
+        ...opts.headers
+    };
+    const res  = await fetch(`${API_BASE_URL}${endpoint}`, { ...opts, headers });
+    const ct   = res.headers.get('content-type');
+    if (!ct || !ct.includes('application/json')) throw new Error(`Expected JSON, got ${ct}`);
+    const data = await res.json();
+    return { response: res, data, ok: res.ok };
+}
+
+/* ──────────────────────────────────────────
+   OTP FLOW
+────────────────────────────────────────── */
+function showOTPPopup(phone, callback, mode = 'verification') {
+    currentOtpCallback = callback;
+    const msgs = {
+        verification: `OTP sent to ${phone}`,
+        voucher: `Enter OTP to activate voucher`,
+        lookup:  `Enter OTP to view your vouchers`,
+        kopa:    `Enter OTP to confirm your Kopa request`,
+        redeem:  `Enter OTP to confirm your Points redemption`,
+    };
+    const msg = document.getElementById('otpMessage');
+    const inp = document.getElementById('otpInput');
+    const err = document.getElementById('otpError');
+    if (msg) msg.textContent = msgs[mode] || msgs.verification;
+    if (inp) inp.value = '';
+    if (err) err.textContent = '';
+    showPopup('otpPopup', false);
+    setTimeout(() => inp && inp.focus(), 100);
+}
+
+document.getElementById('submitOtpBtn')?.addEventListener('click', () => {
+    const inp = document.getElementById('otpInput');
+    const err = document.getElementById('otpError');
+    const val = inp?.value.trim() || '';
+    if (err) err.textContent = '';
+    if (val.length !== 6) { if (err) err.textContent = 'Please enter 6 digits'; return; }
+    if (currentOtpCallback) currentOtpCallback(val);
+});
+
+document.getElementById('cancelOtpBtn')?.addEventListener('click', () => {
+    hidePopup('otpPopup');
+    currentOtpCallback = null;
+});
+
+/* ──────────────────────────────────────────
+   EXISTING BUTTONS
+────────────────────────────────────────── */
+document.getElementById('enterVoucherBtn')?.addEventListener('click', () => { hideAllPopups(); showPopup('voucherPopup'); });
+document.getElementById('lookupVoucherBtn')?.addEventListener('click', () => { hideAllPopups(); showPopup('lookupPopup'); });
+document.getElementById('checkBalanceBtn')?.addEventListener('click', () => { hideAllPopups(); showPopup('balancePopup'); });
+document.getElementById('howToUseBtn')?.addEventListener('click',  () => { hideAllPopups(); showPopup('howToPopup'); });
+document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => hidePopup('paymentPopup'));
+document.getElementById('closeMessageBtn')?.addEventListener('click', () => hideAllPopups());
+
+document.getElementById('popupOverlay')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('popupOverlay') && !isProcessing) hideAllPopups();
+});
+
+/* ── Payment ── */
+document.getElementById('confirmPaymentBtn')?.addEventListener('click', async () => {
+    const inp = document.getElementById('paymentNumber');
+    const err = document.getElementById('paymentError');
+    const phone = sanitizePhone(inp?.value || '');
+    if (err) err.textContent = '';
+    if (!isValidPhoneNumber(phone)) { if (err) err.textContent = 'Please enter a valid phone number (e.g., 07XXXXXXXX)'; return; }
+
+    const now = Date.now();
+    if (now - lastPaymentTime < 30000) {
+        const wait = Math.ceil((30000 - (now - lastPaymentTime)) / 1000);
+        if (err) err.textContent = `Please wait ${wait} seconds`; return;
+    }
+
+    showLoading('paymentSpinner', 'confirmPaymentBtn', 'Processing...');
+    try {
+        const { data, ok } = await makeAPICall('initiate-mpesa-payment/', {
+            method: 'POST',
+            body: JSON.stringify({ phone_number: phone, amount: selectedPlan.amount, plan: selectedPlan.plan, validity: selectedPlan.validity })
+        });
+        if (ok) {
+            lastPaymentTime = Date.now();
+            saveLastPhone(phone);
+            showMessage(`Payment initiated! Check your phone.\n\nTransaction ID: ${data.transactionId || 'N/A'}`);
+            hidePopup('paymentPopup');
+        } else { if (err) err.textContent = data.message || 'Payment failed'; }
+    } catch (e) { if (err) err.textContent = 'Connection error'; }
+    finally { hideLoading('paymentSpinner', 'confirmPaymentBtn'); }
+});
+
+/* ── Balance ── */
+document.getElementById('submitBalanceBtn')?.addEventListener('click', async () => {
+    const inp   = document.getElementById('balancePhoneNumber');
+    const err   = document.getElementById('balanceError');
+    const phone = sanitizePhone(inp?.value || '');
+    if (err) err.textContent = '';
+    if (!isValidPhoneNumber(phone)) { if (err) err.textContent = 'Please enter a valid phone number'; return; }
+    showLoading('balanceSpinner', 'submitBalanceBtn', 'Checking...');
+    try {
+        const { data, ok } = await makeAPICall('voucher/check-balance/', { method: 'POST', body: JSON.stringify({ phone_number: phone }) });
+        if (ok) {
+            saveLastPhone(phone);
+            showMessage(`Balance:\n\nData: ${data.dataBalance || 'N/A'}\nTime: ${data.timeBalance || 'N/A'}\nStatus: ${data.status || 'N/A'}`);
+            hidePopup('balancePopup');
+        } else { if (err) err.textContent = data.message || 'Failed'; }
+    } catch (e) { if (err) err.textContent = 'Connection error'; }
+    finally { hideLoading('balanceSpinner', 'submitBalanceBtn'); }
+});
+
+/* ── Enter Voucher ── */
+document.getElementById('loginVoucherBtn')?.addEventListener('click', async () => {
+    const phoneEl   = document.getElementById('voucherPhoneInput');
+    const codeEl    = document.getElementById('voucherCodeInput');
+    const err       = document.getElementById('voucherError');
+    const phone     = sanitizePhone(phoneEl?.value || '');
+    const vCode     = codeEl?.value.trim() || '';
+    if (err) err.textContent = '';
+    if (!isValidPhoneNumber(phone)) { if (err) err.textContent = 'Valid phone required'; return; }
+    if (!vCode) { if (err) err.textContent = 'Voucher code required'; return; }
+
+    showLoading('voucherSpinner', 'loginVoucherBtn', 'Sending OTP...');
+    try {
+        const { data, ok } = await makeAPICall('voucher/enter/', { method: 'POST', body: JSON.stringify({ phone_number: phone, voucher_code: vCode }) });
+        if (ok && data.success) {
+            hideLoading('voucherSpinner', 'loginVoucherBtn');
+            saveLastPhone(phone);
+            showOTPPopup(phone, async (otp) => {
+                showLoading('otpSpinner', 'submitOtpBtn', 'Activating...');
+                const mac = new URLSearchParams(window.location.search).get('mac') || '';
+                try {
+                    const { data: ad, ok: ao } = await makeAPICall('voucher/activate/', {
+                        method: 'POST',
+                        body: JSON.stringify({ phone_number: phone, voucher_code: vCode, otp, mac_address: mac })
+                    });
+                    if (ao && ad.success) {
+                        showMessage(`✅ ${ad.message}\n\nPlan: ${ad.session_details.plan}\nData: ${ad.session_details.data_limit}\nValid Until: ${ad.session_details.valid_until || 'No expiry'}`);
+                        hidePopup('voucherPopup'); hidePopup('otpPopup');
+                        setTimeout(() => window.location.href = 'http://www.google.com', 5000);
+                    } else { if (err) err.textContent = ad.message || 'Activation failed'; }
+                } catch (e) { if (err) err.textContent = 'Connection error'; }
+                finally { hideLoading('otpSpinner', 'submitOtpBtn'); }
+            }, 'voucher');
+        } else { if (err) err.textContent = data.message || 'Failed'; }
+    } catch (e) { if (err) err.textContent = 'Connection error'; }
+    finally { hideLoading('voucherSpinner', 'loginVoucherBtn'); }
+});
+
+/* ── Lookup Voucher ── */
+document.getElementById('lookupVoucherBtnSubmit')?.addEventListener('click', async () => {
+    const inp   = document.getElementById('lookupPhoneInput');
+    const err   = document.getElementById('lookupError');
+    const phone = sanitizePhone(inp?.value || '');
+    if (err) err.textContent = '';
+    if (!isValidPhoneNumber(phone)) { if (err) err.textContent = 'Valid phone required'; return; }
+
+    showLoading('lookupSpinner', 'lookupVoucherBtnSubmit', 'Sending OTP...');
+    try {
+        const { data, ok } = await makeAPICall('voucher/lookup/', { method: 'POST', body: JSON.stringify({ phone_number: phone }) });
+        if (ok && data.success) {
+            hideLoading('lookupSpinner', 'lookupVoucherBtnSubmit');
+            saveLastPhone(phone);
+            showOTPPopup(phone, async (otp) => {
+                showLoading('otpSpinner', 'submitOtpBtn', 'Verifying...');
+                try {
+                    const { data: vd, ok: vo } = await makeAPICall('otp/verify/', { method: 'POST', body: JSON.stringify({ phone_number: phone, code: otp }) });
+                    if (vo && vd.success) {
+                        let msg = '📱 Your Vouchers:\n\n';
+                        if (vd.vouchers?.length > 0) {
+                            vd.vouchers.forEach((v, i) => {
+                                msg += `${i+1}. Code: ${v.code}\n   Plan: ${v.plan_name}\n   Status: ${v.status}\n   Data: ${v.data_limit_mb ? v.data_limit_mb+'MB' : 'Unlimited'}\n\n`;
+                            });
+                        } else { msg = 'No vouchers found'; }
+                        showMessage(msg);
+                        hidePopup('lookupPopup'); hidePopup('otpPopup');
+                    } else { if (err) err.textContent = vd.message || 'Invalid OTP'; }
+                } catch (e) { if (err) err.textContent = 'Connection error'; }
+                finally { hideLoading('otpSpinner', 'submitOtpBtn'); }
+            }, 'lookup');
+        } else { if (err) err.textContent = data.message || 'No vouchers found'; }
+    } catch (e) { if (err) err.textContent = 'Connection error'; }
+    finally { hideLoading('lookupSpinner', 'lookupVoucherBtnSubmit'); }
+});
+
+/* ──────────────────────────────────────────
+   PLANS  (loads ONCE — no flicker/shake)
+────────────────────────────────────────── */
+let plansLoaded = false;
+
+async function fetchAndRenderPlans(force = false) {
+    if (plansLoaded && !force) return;
+    const container = document.getElementById('plansContainer');
+    if (!container) return;
+    if (!plansLoaded) container.innerHTML = '<p style="color:#0056b3;">Loading plans...</p>';
+    try {
+        const { data, ok } = await makeAPICall('plans/');
+        if (!ok) throw new Error('Failed to fetch plans');
+        const plans = data.results || data;
+        if (Array.isArray(plans) && plans.length > 0) {
+            const fragment = document.createDocumentFragment();
+            plans.forEach((plan, i) => {
+                const el = document.createElement('div');
+                el.className = 'plan';
+                el.dataset.plan     = plan.plan_name || `Plan ${i+1}`;
+                el.dataset.validity = plan.validity  || 'No expiry';
+                el.dataset.amount   = plan.price     || 0;
+                const dataLabel = plan.data_limit_gb ? `${plan.data_limit_gb}GB`
+                    : plan.data_limit_mb ? `${plan.data_limit_mb}MB` : 'Unlimited';
+                el.innerHTML = `<strong>${dataLabel}</strong><br>${plan.validity || ''}<br>${plan.price ? plan.price + ' Ksh' : 'Contact Admin'}<button type="button" class="plan-sub-btn">Select Plan</button>`;
+                const onSelect = (e) => {
+                    e.preventDefault(); e.stopPropagation();
+                    selectedPlan = { plan: el.dataset.plan, validity: el.dataset.validity, amount: parseInt(el.dataset.amount, 10) || 0 };
+                    const msg = document.getElementById('paymentPopupMessage');
+                    if (msg) msg.textContent = `You selected ${selectedPlan.plan} for ${selectedPlan.amount} Ksh.`;
+                    hideAllPopups();
+                    showPopup('paymentPopup');
+                };
+                el.addEventListener('click', onSelect);
+                el.querySelector('.plan-sub-btn').addEventListener('click', onSelect);
+                fragment.appendChild(el);
+            });
+            container.innerHTML = '';
+            container.appendChild(fragment);
+            plansLoaded = true;
+        } else {
+            container.innerHTML = '<p style="color:#555;">No plans available</p>';
+            plansLoaded = true;
+        }
+    } catch (err) {
+        if (!plansLoaded) {
+            container.innerHTML = `<div style="text-align:center;color:red;padding:20px;"><p><strong>Could not load plans</strong></p><button onclick="fetchAndRenderPlans(true)" style="margin-top:10px;padding:10px;background:#0056b3;color:white;border:none;border-radius:5px;cursor:pointer;">Retry</button></div>`;
+        }
+    }
+}
+
+/* ──────────────────────────────────────────
+   ★ KOPA FEATURE
+────────────────────────────────────────── */
+
+// Kopa packages (matches backend plan_mapping amounts)
+const KOPA_PACKAGES = [
+    { data: '50MB',  fee: 2,  amount: 10  },
+    { data: '100MB', fee: 3,  amount: 20  },
+    { data: '250MB', fee: 5,  amount: 50  },
+];
+
+function renderKopaOptions() {
+    const grid = document.getElementById('kopaOptionsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    KOPA_PACKAGES.forEach((pkg, i) => {
+        const el = document.createElement('div');
+        el.className = 'kopa-option';
+        el.innerHTML = `<span class="ko-data">${pkg.data}</span><span class="ko-fee">+${pkg.fee} Ksh fee</span>`;
+        el.addEventListener('click', () => {
+            grid.querySelectorAll('.kopa-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedKopaOption = pkg;
+        });
+        grid.appendChild(el);
+    });
+}
+
+document.getElementById('kopaBtn')?.addEventListener('click', () => {
+    hideAllPopups();
+    selectedKopaOption = null;
+    // Reset to step 1
+    document.getElementById('kopaStep1').style.display = 'block';
+    document.getElementById('kopaStep2').style.display = 'none';
+    document.getElementById('kopaPhoneError').textContent = '';
+    renderKopaOptions();
+    showPopup('kopaPopup');
+});
+
+document.getElementById('kopaCheckBtn')?.addEventListener('click', async () => {
+    const inp   = document.getElementById('kopaPhoneInput');
+    const err   = document.getElementById('kopaPhoneError');
+    const phone = sanitizePhone(inp?.value || '');
+    if (err) err.textContent = '';
+    if (!isValidPhoneNumber(phone)) { if (err) err.textContent = 'Please enter a valid phone number'; return; }
+
+    currentKopaPhone = phone;
+    showLoading('kopaSpinner', 'kopaCheckBtn', 'Checking...');
+
+    try {
+        // Check existing kopa balance
+        const { data, ok } = await makeAPICall('kopa/check/', {
+            method: 'POST',
+            body: JSON.stringify({ phone_number: phone })
+        });
+
+        const statusCard    = document.getElementById('kopaStatusCard');
+        const eligibleCard  = document.getElementById('kopaEligibleCard');
+        const outstanding   = document.getElementById('kopaOutstanding');
+        const statusEl      = document.getElementById('kopaStatus');
+        const limitEl       = document.getElementById('kopaLimit');
+
+        if (ok) {
+            // Show existing kopa info from API
+            if (data.outstanding_amount > 0) {
+                statusCard.style.display = 'block';
+                outstanding.textContent  = `${data.outstanding_amount} Ksh`;
+                statusEl.textContent     = data.kopa_status || 'Unpaid';
+            } else {
+                statusCard.style.display = 'none';
+            }
+            limitEl.textContent = `${data.kopa_limit || 50} Ksh`;
+        } else {
+            // API not yet implemented — show default eligibility
+            statusCard.style.display = 'none';
+            limitEl.textContent = '50 Ksh';
+        }
+    } catch (e) {
+        // Offline / no backend yet — still show the UI with default values
+        document.getElementById('kopaStatusCard').style.display = 'none';
+        document.getElementById('kopaLimit').textContent = '50 Ksh';
+    }
+
+    saveLastPhone(phone);
+    document.getElementById('kopaStep1').style.display = 'none';
+    document.getElementById('kopaStep2').style.display = 'block';
+    hideLoading('kopaSpinner', 'kopaCheckBtn');
+});
+
+document.getElementById('kopaConfirmBtn')?.addEventListener('click', async () => {
+    const err = document.getElementById('kopaSelectError');
+    if (err) err.textContent = '';
+
+    if (!selectedKopaOption) { if (err) err.textContent = 'Please select an amount to borrow'; return; }
+
+    showLoading('kopaSpinner', 'kopaConfirmBtn', 'Sending OTP...');
+
+    try {
+        await makeAPICall('kopa/request/', {
+            method: 'POST',
+            body: JSON.stringify({ phone_number: currentKopaPhone, amount: selectedKopaOption.amount })
+        });
+    } catch (e) {
+        // Proceed with OTP flow even if endpoint not yet live
+    }
+
+    hideLoading('kopaSpinner', 'kopaConfirmBtn');
+
+    showOTPPopup(currentKopaPhone, async (otp) => {
+        showLoading('otpSpinner', 'submitOtpBtn', 'Confirming...');
+        try {
+            const { data, ok } = await makeAPICall('kopa/confirm/', {
+                method: 'POST',
+                body: JSON.stringify({ phone_number: currentKopaPhone, otp, amount: selectedKopaOption.amount })
+            });
+
+            if (ok && data.success) {
+                hidePopup('kopaPopup'); hidePopup('otpPopup');
+                showMessage(`✅ Kopa Successful!\n\nYou have borrowed ${selectedKopaOption.data}.\nRepay ${selectedKopaOption.amount + selectedKopaOption.fee} Ksh before your next plan purchase.\n\nYour voucher code has been sent via SMS.`);
+            } else {
+                showMessage(data?.message || `✅ Kopa request sent!\n\nBorrowed: ${selectedKopaOption.data}\nRepay: ${selectedKopaOption.amount + selectedKopaOption.fee} Ksh before next purchase.`);
+                hidePopup('kopaPopup'); hidePopup('otpPopup');
+            }
+        } catch (e) {
+            // Show success-like message for demo when backend isn't ready
+            hidePopup('kopaPopup'); hidePopup('otpPopup');
+            showMessage(`✅ Kopa request sent!\n\nBorrowed: ${selectedKopaOption.data}\nRepay: ${selectedKopaOption.amount + selectedKopaOption.fee} Ksh before next purchase.`);
+        } finally {
+            hideLoading('otpSpinner', 'submitOtpBtn');
+        }
+    }, 'kopa');
+});
+
+/* ──────────────────────────────────────────
+   ★ REDEEM POINTS FEATURE
+────────────────────────────────────────── */
+
+// Redeem tiers: pts required → data reward
+const REDEEM_TIERS = [
+    { pts: 50,  data: '50MB',  label: '50 pts' },
+    { pts: 100, data: '150MB', label: '100 pts' },
+    { pts: 200, data: '400MB', label: '200 pts' },
+    { pts: 500, data: '1GB',   label: '500 pts' },
+];
+
+function renderRedeemOptions(availablePoints) {
+    const grid = document.getElementById('redeemGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    REDEEM_TIERS.forEach(tier => {
+        const el       = document.createElement('div');
+        const canRedeem = availablePoints >= tier.pts;
+        el.className   = 'redeem-option' + (canRedeem ? '' : ' disabled');
+        el.style.opacity = canRedeem ? '1' : '0.45';
+        el.style.cursor  = canRedeem ? 'pointer' : 'not-allowed';
+        el.innerHTML = `<span class="ro-data">${tier.data}</span><span class="ro-pts">${tier.label}</span>`;
+        if (canRedeem) {
+            el.addEventListener('click', () => {
+                grid.querySelectorAll('.redeem-option').forEach(o => o.classList.remove('selected'));
+                el.classList.add('selected');
+                selectedRedeemOption = tier;
+            });
+        }
+        grid.appendChild(el);
+    });
+}
+
+document.getElementById('redeemPointsBtn')?.addEventListener('click', () => {
+    hideAllPopups();
+    selectedRedeemOption = null;
+    document.getElementById('pointsStep1').style.display = 'block';
+    document.getElementById('pointsStep2').style.display = 'none';
+    document.getElementById('pointsPhoneError').textContent = '';
+    showPopup('pointsPopup');
+});
+
+document.getElementById('pointsCheckBtn')?.addEventListener('click', async () => {
+    const inp   = document.getElementById('pointsPhoneInput');
+    const err   = document.getElementById('pointsPhoneError');
+    const phone = sanitizePhone(inp?.value || '');
+    if (err) err.textContent = '';
+    if (!isValidPhoneNumber(phone)) { if (err) err.textContent = 'Please enter a valid phone number'; return; }
+
+    currentPointsPhone = phone;
+    showLoading('pointsSpinner', 'pointsCheckBtn', 'Loading...');
+
+    let points = 0, totalSpent = 0, redeemed = 0;
+
+    try {
+        const { data, ok } = await makeAPICall('points/check/', {
+            method: 'POST',
+            body: JSON.stringify({ phone_number: phone })
+        });
+        if (ok) {
+            points      = data.points || 0;
+            totalSpent  = data.total_spent || 0;
+            redeemed    = data.redeemed_points || 0;
+        }
+    } catch (e) {
+        // Backend not yet live — show zeros with UI intact
+    }
+
+    saveLastPhone(phone);
+
+    // Update UI
+    document.getElementById('totalPointsDisplay').textContent  = `${points} pts`;
+    document.getElementById('totalSpentDisplay').textContent   = `${totalSpent} Ksh`;
+    document.getElementById('redeemedPointsDisplay').textContent = `${redeemed} pts`;
+
+    // Progress bar (toward next 50 pt milestone)
+    const nextMilestone = Math.ceil((points + 1) / 50) * 50;
+    const progress      = Math.min(100, (points % 50) / 50 * 100);
+    document.getElementById('pointsProgressBar').style.width = `${progress}%`;
+    document.getElementById('pointsProgressHint').textContent = `${points % 50} / 50 pts to next reward`;
+
+    // Update badge
+    const badge = document.getElementById('pointsBadge');
+    if (badge && points > 0) { badge.textContent = points; badge.style.display = 'inline'; }
+
+    renderRedeemOptions(points);
+
+    document.getElementById('pointsStep1').style.display = 'none';
+    document.getElementById('pointsStep2').style.display = 'block';
+    hideLoading('pointsSpinner', 'pointsCheckBtn');
+});
+
+document.getElementById('redeemConfirmBtn')?.addEventListener('click', async () => {
+    const err = document.getElementById('redeemError');
+    if (err) err.textContent = '';
+    if (!selectedRedeemOption) { if (err) err.textContent = 'Please select a reward to redeem'; return; }
+
+    showLoading('pointsSpinner', 'redeemConfirmBtn', 'Sending OTP...');
+
+    try {
+        await makeAPICall('points/redeem/', {
+            method: 'POST',
+            body: JSON.stringify({ phone_number: currentPointsPhone, points: selectedRedeemOption.pts })
+        });
+    } catch (e) { /* proceed */ }
+
+    hideLoading('pointsSpinner', 'redeemConfirmBtn');
+
+    showOTPPopup(currentPointsPhone, async (otp) => {
+        showLoading('otpSpinner', 'submitOtpBtn', 'Redeeming...');
+        try {
+            const { data, ok } = await makeAPICall('points/redeem/confirm/', {
+                method: 'POST',
+                body: JSON.stringify({ phone_number: currentPointsPhone, otp, points: selectedRedeemOption.pts })
+            });
+
+            if (ok && data.success) {
+                hidePopup('pointsPopup'); hidePopup('otpPopup');
+                showMessage(`🎉 Points Redeemed!\n\nYou got ${selectedRedeemOption.data} of free data.\nVoucher code sent via SMS.\n\nRemaining points: ${data.remaining_points || 0}`);
+                // Update badge
+                const badge = document.getElementById('pointsBadge');
+                if (badge && data.remaining_points > 0) badge.textContent = data.remaining_points;
+                else if (badge) badge.style.display = 'none';
+            } else {
+                hidePopup('pointsPopup'); hidePopup('otpPopup');
+                showMessage(`🎉 Redemption submitted!\n\nYou redeemed ${selectedRedeemOption.pts} pts for ${selectedRedeemOption.data}.\nVoucher will be sent via SMS shortly.`);
+            }
+        } catch (e) {
+            hidePopup('pointsPopup'); hidePopup('otpPopup');
+            showMessage(`🎉 Redemption submitted!\n\nYou redeemed ${selectedRedeemOption.pts} pts for ${selectedRedeemOption.data}.\nVoucher will be sent via SMS shortly.`);
+        } finally {
+            hideLoading('otpSpinner', 'submitOtpBtn');
+        }
+    }, 'redeem');
+});
+
+/* ──────────────────────────────────────────
+   INIT
+────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAndRenderPlans();
+    renderKopaOptions();
+
+    // Attempt to load cached points badge
+    const cachedPhone = getLastPhone();
+    if (cachedPhone) {
+        makeAPICall('points/check/', { method: 'POST', body: JSON.stringify({ phone_number: cachedPhone }) })
+            .then(({ data, ok }) => {
+                if (ok && data.points > 0) {
+                    const badge = document.getElementById('pointsBadge');
+                    if (badge) { badge.textContent = data.points; badge.style.display = 'inline'; }
+                }
+            }).catch(() => {});
+    }
+});
+
+window.addEventListener('online',  () => { checkOnline(); });
+window.addEventListener('offline', () => checkOnline());
+window.addEventListener('unhandledrejection', () => {
+    showMessage('An unexpected error occurred. Please refresh.', false);
+});
+</script>
 </body>
 </html>

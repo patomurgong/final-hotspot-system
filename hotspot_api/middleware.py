@@ -1,40 +1,41 @@
 from django.utils.deprecation import MiddlewareMixin
 
+
 class AdminSidebarMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
-        if (request.path.startswith('/admin/') and request.path != '/admin/' and 
-            hasattr(response, 'content') and 
-            response.get('Content-Type', '').startswith('text/html')):
-            
+        if (request.path.startswith('/admin/') and
+                hasattr(response, 'content') and
+                response.get('Content-Type', '').startswith('text/html')):
+
             try:
                 content = response.content.decode('utf-8')
-                
+
                 if 'custom-sidebar' not in content and '<body' in content:
                     sidebar_html = '''
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     * { box-sizing: border-box !important; }
     html, body { margin: 0 !important; padding: 0 !important; }
-    
-    /* Hide Django defaults */
+
+    /* Hide ALL default Django sidebars and nav */
     #nav-sidebar, .toggle-nav-sidebar { display: none !important; }
     #branding { display: none !important; }
-    
-    /* Hide Django's theme toggle */
     .theme-toggle, button[title*="theme"], button[title*="Theme"],
     label.toggle-theme, .theme-switcher, a[href*="theme"] { display: none !important; }
-    
-    /* Hide the filter sidebar */
     #changelist-filter { display: none !important; }
-    
-    /* Make content full width when filter is hidden */
     #changelist { margin-right: 0 !important; width: 100% !important; }
-    
-    /* Custom sidebar */
-    #custom-sidebar { 
+
+    /* Hide the dashboard template's built-in sidebar (.sidebar class) */
+    .sidebar { display: none !important; }
+    .admin-container { display: block !important; }
+    .main-content { margin-left: 0 !important; width: 100% !important; }
+
+    /* Hide duplicate admin header from dashboard.html */
+    .admin-header { display: none !important; }
+
+    #custom-sidebar {
         position: fixed;
-        left: 0;
-        top: 0;
+        left: 0; top: 0;
         width: 250px;
         height: 100vh;
         z-index: 9999;
@@ -42,8 +43,8 @@ class AdminSidebarMiddleware(MiddlewareMixin):
         padding: 0;
         box-shadow: 2px 0 5px rgba(0,0,0,0.3);
     }
-    
-    #custom-sidebar .brand { 
+
+    #custom-sidebar .brand {
         padding: 20px;
         font-size: 20px;
         font-weight: 600;
@@ -52,52 +53,62 @@ class AdminSidebarMiddleware(MiddlewareMixin):
         border-bottom: 1px solid rgba(255,255,255,0.1);
         margin-bottom: 10px;
     }
-    
-    #custom-sidebar h2 { 
-        padding: 0 20px; 
-        font-size: 12px; 
-        text-transform: uppercase; 
-        margin: 20px 0 10px 0; 
-        letter-spacing: 1px; 
-        font-weight: 600; 
+
+    #custom-sidebar h2 {
+        padding: 0 20px;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin: 20px 0 10px 0;
+        letter-spacing: 1px;
+        font-weight: 600;
     }
-    
+
     #custom-sidebar ul { list-style: none; padding: 0; margin: 0; }
-    
-    #custom-sidebar a { 
-        display: flex; 
-        align-items: center; 
-        gap: 10px; 
-        padding: 12px 20px; 
-        text-decoration: none; 
-        border-left: 3px solid transparent; 
-        transition: all 0.2s; 
+
+    #custom-sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-left: 3px solid transparent;
+        transition: all 0.2s;
     }
-    
+
     #custom-sidebar i { width: 20px; font-size: 14px; }
-    
-    /* Theme toggle button */
-    #theme-toggle { 
-        position: fixed; 
-        top: 10px; 
-        right: 20px; 
-        z-index: 10000; 
-        background: #3498db; 
-        color: white; 
-        border: none; 
-        padding: 10px 15px; 
-        border-radius: 5px; 
-        cursor: pointer; 
-        font-size: 14px; 
-        display: flex; 
-        align-items: center; 
-        gap: 8px; 
+
+    /* ── NEW: feature badges ── */
+    #custom-sidebar .nav-badge {
+        margin-left: auto;
+        background: #7c3aed;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 999px;
+        letter-spacing: 0.3px;
+    }
+    #custom-sidebar .nav-badge.pts { background: #d97706; }
+
+    #theme-toggle {
+        position: fixed;
+        top: 10px; right: 20px;
+        z-index: 10000;
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
         transition: background 0.3s;
     }
-    
     #theme-toggle:hover { background: #2980b9; }
-    
-    /* Dark mode styles */
+
+    /* Dark mode */
     body.dark-mode { background: #1a1a1a !important; color: #e0e0e0 !important; }
     body.dark-mode #custom-sidebar { background: #252525; }
     body.dark-mode #custom-sidebar .brand { color: #fff; }
@@ -112,16 +123,14 @@ class AdminSidebarMiddleware(MiddlewareMixin):
     body.dark-mode tbody tr { background: #252525 !important; }
     body.dark-mode tbody tr:hover { background: #2a2a2a !important; }
     body.dark-mode tbody td { color: #ccc !important; border-bottom: 1px solid #333 !important; }
-    body.dark-mode input, body.dark-mode textarea, body.dark-mode select { 
-        background: #2a2a2a !important; 
-        color: #e0e0e0 !important; 
-        border: 1px solid #444 !important; 
+    body.dark-mode input, body.dark-mode textarea, body.dark-mode select {
+        background: #2a2a2a !important; color: #e0e0e0 !important; border: 1px solid #444 !important;
     }
     body.dark-mode .breadcrumbs { background: #2a2a2a !important; color: #ccc !important; }
     body.dark-mode .breadcrumbs a { color: #3498db !important; }
     body.dark-mode #header { background: #2c3e50 !important; }
-    
-    /* Light mode styles */
+
+    /* Light mode */
     body.light-mode { background: #fff !important; color: #333 !important; }
     body.light-mode #custom-sidebar { background: #f8f9fa; border-right: 1px solid #ddd; }
     body.light-mode #custom-sidebar .brand { color: #333; border-bottom-color: #ddd; }
@@ -136,20 +145,21 @@ class AdminSidebarMiddleware(MiddlewareMixin):
     body.light-mode tbody tr { background: #fff !important; }
     body.light-mode tbody tr:hover { background: #f8f9fa !important; }
     body.light-mode tbody td { color: #495057 !important; border-bottom: 1px solid #dee2e6 !important; }
-    body.light-mode input, body.light-mode textarea, body.light-mode select { 
-        background: #fff !important; 
-        color: #495057 !important; 
-        border: 1px solid #ced4da !important; 
+    body.light-mode input, body.light-mode textarea, body.light-mode select {
+        background: #fff !important; color: #495057 !important; border: 1px solid #ced4da !important;
     }
     body.light-mode .breadcrumbs { background: #f8f9fa !important; color: #495057 !important; }
     body.light-mode .breadcrumbs a { color: #007bff !important; }
 </style>
+
 <button id="theme-toggle" onclick="toggleTheme()">
     <i class="fas fa-moon" id="theme-icon"></i>
     <span id="theme-text">Dark Mode</span>
 </button>
+
 <div id="custom-sidebar">
     <div class="brand">Kirepanet ADMIN</div>
+
     <h2>HOTSPOT_API</h2>
     <ul>
         <li><a href="/admin/"><i class="fas fa-home"></i> Dashboard</a></li>
@@ -161,18 +171,41 @@ class AdminSidebarMiddleware(MiddlewareMixin):
         <li><a href="/admin/hotspot_api/device/"><i class="fas fa-mobile-alt"></i> Devices</a></li>
         <li><a href="/admin/hotspot_api/usagedata/"><i class="fas fa-chart-line"></i> Usage Sessions</a></li>
     </ul>
+
+    <h2>KOPA & POINTS</h2>
+    <ul>
+        <li>
+            <a href="/admin/hotspot_api/kopatransaction/">
+                <i class="fas fa-hand-holding-dollar"></i> Kopa Transactions
+                <span class="nav-badge">NEW</span>
+            </a>
+        </li>
+        <li>
+            <a href="/admin/hotspot_api/customerpoints/">
+                <i class="fas fa-star"></i> Customer Points
+                <span class="nav-badge pts">NEW</span>
+            </a>
+        </li>
+        <li>
+            <a href="/admin/hotspot_api/pointstransaction/">
+                <i class="fas fa-receipt"></i> Points Ledger
+                <span class="nav-badge pts">NEW</span>
+            </a>
+        </li>
+    </ul>
+
     <h2>AUTHENTICATION</h2>
     <ul>
         <li><a href="/admin/auth/user/"><i class="fas fa-user"></i> Users</a></li>
         <li><a href="/admin/auth/group/"><i class="fas fa-users-cog"></i> Groups</a></li>
     </ul>
 </div>
+
 <script>
 function toggleTheme() {
     const body = document.body;
     const icon = document.getElementById('theme-icon');
     const text = document.getElementById('theme-text');
-    
     if (body.classList.contains('dark-mode')) {
         body.classList.remove('dark-mode');
         body.classList.add('light-mode');
@@ -210,6 +243,6 @@ setTimeout(function() {
                     content = content.replace('<body', sidebar_html + '<body', 1)
                     response.content = content.encode('utf-8')
                     response['Content-Length'] = len(response.content)
-            except:
+            except Exception:
                 pass
         return response
