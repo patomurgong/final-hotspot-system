@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KiRePa Hotspot — Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+    --bg: #0a0e1a;
+    --bg2: #111627;
+    --bg3: #1a2035;
+    --border: rgba(99,179,255,0.12);
+    --accent: #3b9eff;
+    --accent2: #00e5a0;
+    --accent3: #ff6b6b;
+    --accent4: #ffd166;
+    --text: #e8edf8;
+    --muted: #7a8aaa;
+    --code-bg: #0d1421;
+    --sidebar-w: 260px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); display:flex; min-height:100vh; font-size:15px; line-height:1.7; }
+
+/* ── Sidebar ── */
+.sidebar {
+    width: var(--sidebar-w);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    padding-bottom: 2rem;
+}
+.sidebar-brand {
+    padding: 1.5rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+}
+.sidebar-brand h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+}
+.sidebar-brand p { font-size:11px; color:var(--muted); margin-top:2px; }
+.sidebar-section { padding: 0.75rem 1.25rem 0.25rem; font-size:10px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; }
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 1.25rem;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+}
+.sidebar a:hover, .sidebar a.active {
+    color: var(--text);
+    background: rgba(59,158,255,0.07);
+    border-left-color: var(--accent);
+}
+.sidebar a .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-w); flex: 1; padding: 0; }
+
+/* ── Hero ── */
+.hero {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0f1e3d 50%, #0a1628 100%);
+    padding: 5rem 4rem 4rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(59,158,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59,158,255,0.12);
+    border: 1px solid rgba(59,158,255,0.25);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+}
+.hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
+}
+.hero h1 span { color: var(--accent); }
+.hero p { font-size: 17px; color: var(--muted); max-width: 580px; margin-bottom: 2rem; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Content sections ── */
+.content { padding: 3rem 4rem; max-width: 900px; }
+.section { margin-bottom: 5rem; }
+.section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+.section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+.section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 2rem 0 0.75rem;
+    color: var(--text);
+}
+.section p { color: var(--muted); margin-bottom: 1rem; line-height: 1.8; }
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+/* ── Cards ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+}
+.card:hover { border-color: rgba(59,158,255,0.3); }
+.card-icon { font-size: 24px; margin-bottom: 0.75rem; }
+.card h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+.card p { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+/* ── Steps ── */
+.steps { counter-reset: steps; }
+.step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+.step-num {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+.step-body h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.25rem; }
+.step-body p { font-size: 13px; color: var(--muted); margin: 0; }
+
+/* ── Code blocks ── */
+.code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+.code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+.code-dots { display:flex; gap:5px; }
+.code-dots span { width:10px; height:10px; border-radius:50%; }
+.code-dots .r { background:#ff6b6b; }
+.code-dots .y { background:#ffd166; }
+.code-dots .g { background:#00e5a0; }
+pre {
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #c9d1e0;
+}
+.kw { color: #7eb6ff; }
+.str { color: #a8ff78; }
+.cm { color: #4a5568; font-style: italic; }
+.fn { color: #ffd166; }
+.num { color: #ff9d6c; }
+.hl { background: rgba(59,158,255,0.08); display:block; margin: 0 -1.5rem; padding: 0 1.5rem; }
+
+/* ── API Endpoint cards ── */
+.endpoint {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+.endpoint-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.endpoint-header:hover { background: rgba(255,255,255,0.02); }
+.method {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+.get  { background: rgba(0,229,160,0.15); color: var(--accent2); }
+.post { background: rgba(59,158,255,0.15); color: var(--accent); }
+.endpoint-path {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    flex: 1;
+}
+.endpoint-desc { font-size: 12px; color: var(--muted); }
+.endpoint-body {
+    padding: 0 1.25rem 1.25rem;
+    border-top: 1px solid var(--border);
+    display: none;
+}
+.endpoint-body.open { display: block; }
+.param-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 13px; }
+.param-table th { text-align:left; color:var(--muted); font-weight:500; padding:6px 8px; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid var(--border); }
+.param-table td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text); vertical-align: top; }
+.param-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size:12px; color: var(--accent4); }
+.param-table td:nth-child(2) { color: var(--accent2); font-size:12px; }
+.required { background: rgba(255,107,107,0.15); color: var(--accent3); font-size:10px; padding:2px 6px; border-radius:4px; font-weight:600; }
+.optional { background: rgba(0,229,160,0.1); color: var(--accent2); font-size:10px; padding:2px 6px; border-radius:4px; font-weight:600; }
+
+/* ── Tables ── */
+.doc-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:13px; }
+.doc-table th { text-align:left; padding:10px 12px; background:var(--bg3); color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+.doc-table td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text); }
+.doc-table tr:last-child td { border-bottom:none; }
+.doc-table code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--code-bg); padding:2px 6px; border-radius:4px; color:var(--accent4); }
+
+/* ── Badges ── */
+.badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.badge-blue { background:rgba(59,158,255,0.15); color:var(--accent); }
+.badge-green { background:rgba(0,229,160,0.15); color:var(--accent2); }
+.badge-red { background:rgba(255,107,107,0.15); color:var(--accent3); }
+.badge-yellow { background:rgba(255,209,102,0.15); color:var(--accent4); }
+
+/* ── Alert boxes ── */
+.alert { padding:1rem 1.25rem; border-radius:10px; margin:1rem 0; font-size:13px; border-left:3px solid; }
+.alert-info { background:rgba(59,158,255,0.08); border-color:var(--accent); color:#a8c8ff; }
+.alert-warn { background:rgba(255,209,102,0.08); border-color:var(--accent4); color:#ffe08a; }
+.alert-success { background:rgba(0,229,160,0.08); border-color:var(--accent2); color:#80ffd4; }
+.alert strong { display:block; margin-bottom:0.25rem; }
+
+/* ── User guide flow ── */
+.flow { display:flex; flex-direction:column; gap:0; margin:1.5rem 0; }
+.flow-item {
+    display:flex;
+    gap:1rem;
+    padding:1rem 1.25rem;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:0;
+    position:relative;
+}
+.flow-item:first-child { border-radius:12px 12px 0 0; }
+.flow-item:last-child { border-radius:0 0 12px 12px; }
+.flow-item:not(:last-child) { border-bottom:none; }
+.flow-icon {
+    width:36px; height:36px;
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    flex-shrink:0;
+}
+.flow-body h4 { font-size:14px; font-weight:600; margin-bottom:3px; }
+.flow-body p { font-size:12px; color:var(--muted); margin:0; line-height:1.5; }
+
+/* ── Schema ── */
+.model-card {
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin:1rem 0;
+    overflow:hidden;
+}
+.model-header {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0.875rem 1.25rem;
+    background:var(--bg3);
+    border-bottom:1px solid var(--border);
+}
+.model-header h4 { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:600; color:var(--accent4); }
+.model-header p { font-size:12px; color:var(--muted); margin:0; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--bg3); border-radius:999px; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .sidebar { display:none; }
+    .main { margin-left:0; }
+    .hero, .content { padding:2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ SIDEBAR ════ -->
+<nav class="sidebar">
+    <div class="sidebar-brand">
+        <h1>📡 KiRePa Docs</h1>
+        <p>Hotspot Management System</p>
+    </div>
+
+    <div class="sidebar-section">Getting Started</div>
+    <a href="#overview"><span class="dot" style="background:#3b9eff"></span>Overview</a>
+    <a href="#installation"><span class="dot" style="background:#3b9eff"></span>Installation</a>
+    <a href="#configuration"><span class="dot" style="background:#3b9eff"></span>Configuration</a>
+    <a href="#deployment"><span class="dot" style="background:#3b9eff"></span>Deployment</a>
+
+    <div class="sidebar-section">User Guide</div>
+    <a href="#user-portal"><span class="dot" style="background:#00e5a0"></span>Portal Overview</a>
+    <a href="#user-plans"><span class="dot" style="background:#00e5a0"></span>Buying a Plan</a>
+    <a href="#user-voucher"><span class="dot" style="background:#00e5a0"></span>Using a Voucher</a>
+    <a href="#user-kopa"><span class="dot" style="background:#00e5a0"></span>Kopa (Borrow Data)</a>
+    <a href="#user-points"><span class="dot" style="background:#00e5a0"></span>Reward Points</a>
+
+    <div class="sidebar-section">Admin Guide</div>
+    <a href="#admin-dashboard"><span class="dot" style="background:#ffd166"></span>Dashboard</a>
+    <a href="#admin-plans"><span class="dot" style="background:#ffd166"></span>Managing Plans</a>
+    <a href="#admin-vouchers"><span class="dot" style="background:#ffd166"></span>Vouchers</a>
+    <a href="#admin-transactions"><span class="dot" style="background:#ffd166"></span>Transactions</a>
+    <a href="#admin-kopa"><span class="dot" style="background:#ffd166"></span>Kopa Management</a>
+    <a href="#admin-points"><span class="dot" style="background:#ffd166"></span>Points Ledger</a>
+
+    <div class="sidebar-section">API Reference</div>
+    <a href="#api-plans"><span class="dot" style="background:#ff6b6b"></span>Plans</a>
+    <a href="#api-vouchers"><span class="dot" style="background:#ff6b6b"></span>Vouchers</a>
+    <a href="#api-mpesa"><span class="dot" style="background:#ff6b6b"></span>M-Pesa</a>
+    <a href="#api-otp"><span class="dot" style="background:#ff6b6b"></span>OTP</a>
+    <a href="#api-kopa"><span class="dot" style="background:#ff6b6b"></span>Kopa</a>
+    <a href="#api-points"><span class="dot" style="background:#ff6b6b"></span>Points</a>
+
+    <div class="sidebar-section">Technical</div>
+    <a href="#tech-structure"><span class="dot" style="background:#a78bfa"></span>Project Structure</a>
+    <a href="#tech-models"><span class="dot" style="background:#a78bfa"></span>Database Models</a>
+    <a href="#tech-flow"><span class="dot" style="background:#a78bfa"></span>Payment Flow</a>
+</nav>
+
+<!-- ════ MAIN ════ -->
+<main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-badge">📡 v1.0 · Django REST Framework</div>
+        <h1>KiRePa <span>Wi-Fi Hotspot</span><br>Documentation</h1>
+        <p>Complete guide for customers, administrators, developers, and API integrators.</p>
+        <div class="hero-tags">
+            <span class="tag">Django 5.x</span>
+            <span class="tag">M-Pesa Daraja</span>
+            <span class="tag">Africa's Talking SMS</span>
+            <span class="tag">Redis OTP Cache</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Railway Deploy</span>
+        </div>
+    </div>
+
+    <div class="content">
+
+    <!-- ══════════════════════════════
+         OVERVIEW
+    ══════════════════════════════ -->
+    <div class="section" id="overview">
+        <div class="section-label">Getting Started</div>
+        <h2>Overview</h2>
+        <p>KiRePa is a full-stack Wi-Fi hotspot management system. Customers purchase data plans via M-Pesa, receive voucher codes via SMS, and connect to the internet. The system includes Kopa (data borrowing) and a reward points program.</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">💳</div>
+                <h4>M-Pesa Payments</h4>
+                <p>STK Push via Safaricom Daraja API. Payments trigger automatic voucher creation.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎫</div>
+                <h4>Voucher System</h4>
+                <p>Auto-generated 12-character codes sent via SMS after successful payment.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤝</div>
+                <h4>Kopa Feature</h4>
+                <p>Customers borrow data now and repay automatically on their next purchase.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⭐</div>
+                <h4>Reward Points</h4>
+                <p>Earn 1 point per 10 Ksh spent. Redeem for free data vouchers.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h4>OTP Verification</h4>
+                <p>SMS-based OTP for all sensitive actions via Africa's Talking.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h4>Admin Dashboard</h4>
+                <p>Dark-themed panel with revenue charts, customer stats, and transaction logs.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         INSTALLATION
+    ══════════════════════════════ -->
+    <div class="section" id="installation">
+        <div class="section-label">Getting Started</div>
+        <h2>Installation</h2>
+        <p>Follow these steps to run the project locally on your computer.</p>
+
+        <h3>Prerequisites</h3>
+        <div class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <table class="doc-table" style="margin:0;">
+                <tr><th>Tool</th><th>Version</th><th>Download</th></tr>
+                <tr><td>Python</td><td>3.10+</td><td><code>python.org/downloads</code></td></tr>
+                <tr><td>Git</td><td>Any</td><td><code>git-scm.com</code></td></tr>
+                <tr><td>Redis</td><td>Any</td><td><code>redis.io/download</code></td></tr>
+            </table>
+        </div>
+
+        <h3>Step-by-step setup</h3>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <h4>Clone the repository</h4>
+                    <p>Download the project from GitHub</p>
+                </div>
+            </div>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>bash</div>
+            <pre>git clone https://github.com/patomurgong/final-hotspot-system.git
+cd final-hotspot-system</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Windows PowerShell</div>
+            <pre><span class="cm"># Create and activate virtual environment</span>
+python -m venv .venv
+.venv\Scripts\activate
+
+<span class="cm"># Install all dependencies</span>
+pip install -r requirements.txt</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>.env file (create this in the project root)</div>
+            <pre>SECRET_KEY=your-secret-key-here
+DEBUG=True
+NGROK_URL=https://your-ngrok-url.ngrok-free.app
+AFRICASTALKING_USERNAME=sandbox
+AFRICASTALKING_API_KEY=your-at-api-key
+AFRICASTALKING_SENDER_ID=KIREPA
+REDIS_URL=redis://127.0.0.1:6379/0</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Run the server</div>
+            <pre>python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8002</pre>
+        </div>
+
+        <div class="alert alert-success">
+            <strong>✅ Done!</strong>
+            Visit <code style="color:var(--accent2)">http://127.0.0.1:8002</code> for the portal and <code style="color:var(--accent2)">http://127.0.0.1:8002/admin</code> for the admin dashboard.
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         CONFIGURATION
+    ══════════════════════════════ -->
+    <div class="section" id="configuration">
+        <div class="section-label">Getting Started</div>
+        <h2>Configuration</h2>
+
+        <h3>M-Pesa Settings</h3>
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>finalHotspot/settings.py</div>
+            <pre><span class="cm"># Sandbox credentials (for testing)</span>
+MPESA_CONSUMER_KEY       = <span class="str">'your-consumer-key'</span>
+MPESA_CONSUMER_SECRET    = <span class="str">'your-consumer-secret'</span>
+MPESA_PASSKEY            = <span class="str">'your-passkey'</span>
+MPESA_BUSINESS_SHORTCODE = <span class="str">'174379'</span>  <span class="cm"># sandbox shortcode</span>
+MPESA_CALLBACK_URL       = <span class="str">f'{NGROK_URL}/admin/hotspot_api/mpesa/callback/'</span></pre>
+        </div>
+
+        <div class="alert alert-warn">
+            <strong>⚠️ Sandbox vs Production</strong>
+            The sandbox shortcode <code>174379</code> is for testing only and never sends STK push to real phones. Apply for Go Live at <code>developer.safaricom.co.ke</code> for production credentials.
+        </div>
+
+        <h3>SMS Settings (Africa's Talking)</h3>
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>.env</div>
+            <pre>AFRICASTALKING_USERNAME=sandbox     <span class="cm"># or your AT username</span>
+AFRICASTALKING_API_KEY=your-api-key
+AFRICASTALKING_SENDER_ID=KIREPA</pre>
+        </div>
+
+        <h3>Data Plans</h3>
+        <p>Plans are managed entirely from the admin panel. No code changes needed. Go to <strong>Admin → Hotspot Plans → Add Hotspot Plan</strong>.</p>
+    </div>
+
+    <!-- ══════════════════════════════
+         DEPLOYMENT
+    ══════════════════════════════ -->
+    <div class="section" id="deployment">
+        <div class="section-label">Getting Started</div>
+        <h2>Deployment on Railway</h2>
+
+        <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Create Railway account</h4><p>Go to railway.app and sign up with your GitHub account</p></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-body"><h4>New Project → GitHub Repository</h4><p>Select final-hotspot-system from your repos</p></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Add PostgreSQL + Redis</h4><p>Click + New → Database → Add PostgreSQL, then Redis</p></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Set environment variables</h4><p>Add SECRET_KEY, DEBUG=False, MPESA credentials, and AT credentials in Railway Variables tab</p></div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Run migrations</h4><p>In Railway Shell tab: python manage.py migrate && python manage.py createsuperuser</p></div></div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>ℹ️ Required files for Railway</strong>
+            Make sure your repo contains: <code>Procfile</code> with <code>web: gunicorn finalHotspot.wsgi --log-file -</code> and <code>runtime.txt</code> with <code>python-3.13.0</code>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════════
+         USER GUIDE
+    ══════════════════════════════ -->
+    <div class="section" id="user-portal">
+        <div class="section-label">User Guide</div>
+        <h2>Portal Overview</h2>
+        <p>The KiRePa Wi-Fi portal is accessible at your hotspot's IP address or domain. No app download required — it opens automatically when you connect to the Wi-Fi network.</p>
+
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">🎫</div><h4>Enter Voucher</h4><p>Activate a voucher code you received via SMS</p></div>
+            <div class="card"><div class="card-icon">🔍</div><h4>Lookup Voucher</h4><p>Find all vouchers linked to your phone number</p></div>
+            <div class="card"><div class="card-icon">💰</div><h4>Check Balance</h4><p>See remaining data and time on your active plan</p></div>
+            <div class="card"><div class="card-icon">📖</div><h4>How to Use</h4><p>Step-by-step guide for new customers</p></div>
+            <div class="card"><div class="card-icon">🤝</div><h4>Kopa Data</h4><p>Borrow data when you run out</p></div>
+            <div class="card"><div class="card-icon">⭐</div><h4>My Points</h4><p>View and redeem your reward points</p></div>
+        </div>
+    </div>
+
+    <div class="section" id="user-plans">
+        <div class="section-label">User Guide</div>
+        <h2>Buying a Plan</h2>
+        <div class="flow">
+            <div class="flow-item"><div class="flow-icon">1️⃣</div><div class="flow-body"><h4>Select a plan</h4><p>Scroll down to "Purchase a Plan" and tap any circle plan button. Choose the data size that fits your needs.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">2️⃣</div><div class="flow-body"><h4>Enter your M-Pesa number</h4><p>Type your Safaricom number in the format 07XXXXXXXX (10 digits)</p></div></div>
+            <div class="flow-item"><div class="flow-icon">3️⃣</div><div class="flow-body"><h4>Pay with M-Pesa</h4><p>Click "Pay with MPESA". An STK push prompt will appear on your phone. Enter your M-Pesa PIN.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">4️⃣</div><div class="flow-body"><h4>Receive voucher via SMS</h4><p>Within seconds of payment confirmation, you'll receive an SMS with your voucher code.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">5️⃣</div><div class="flow-body"><h4>Activate and browse</h4><p>Click "Enter Voucher", enter your phone number and voucher code, verify OTP, and you're connected!</p></div></div>
+        </div>
+    </div>
+
+    <div class="section" id="user-voucher">
+        <div class="section-label">User Guide</div>
+        <h2>Using a Voucher</h2>
+        <p>After receiving your voucher code via SMS:</p>
+        <div class="flow">
+            <div class="flow-item"><div class="flow-icon">📱</div><div class="flow-body"><h4>Click "Enter Voucher"</h4><p>Find this button at the top of the portal</p></div></div>
+            <div class="flow-item"><div class="flow-icon">🔢</div><div class="flow-body"><h4>Enter phone + voucher code</h4><p>Use the same phone number you paid with. The voucher code is in your SMS.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">🔐</div><div class="flow-body"><h4>Verify OTP</h4><p>An OTP will be sent to your phone. Enter all 6 digits within 5 minutes.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">✅</div><div class="flow-body"><h4>Connected!</h4><p>Your device is now connected to the internet. The page will redirect to Google automatically.</p></div></div>
+        </div>
+        <div class="alert alert-info"><strong>ℹ️ Lost your voucher?</strong> Use the "Lookup Voucher" button to retrieve all vouchers linked to your phone number.</div>
+    </div>
+
+    <div class="section" id="user-kopa">
+        <div class="section-label">User Guide</div>
+        <h2>Kopa (Borrow Data)</h2>
+        <p>Kopa lets you borrow a small amount of data when you need internet urgently. You repay it automatically on your next purchase.</p>
+
+        <table class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <tr><th>Package</th><th>Data</th><th>Fee</th><th>Total to repay</th></tr>
+            <tr><td>Small</td><td>50 MB</td><td>2 Ksh</td><td>12 Ksh</td></tr>
+            <tr><td>Medium</td><td>100 MB</td><td>3 Ksh</td><td>23 Ksh</td></tr>
+            <tr><td>Large</td><td>250 MB</td><td>5 Ksh</td><td>55 Ksh</td></tr>
+        </table>
+
+        <div class="alert alert-warn"><strong>⚠️ Important</strong> You must repay your Kopa balance before you can purchase a new plan. The repayment happens automatically — we deduct it from your next payment.</div>
+
+        <h3>Kopa Eligibility</h3>
+        <table class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <tr><th>Total Spent</th><th>Kopa Limit</th></tr>
+            <tr><td>50 – 199 Ksh</td><td>10 Ksh package (50MB)</td></tr>
+            <tr><td>200 – 499 Ksh</td><td>20 Ksh package (100MB)</td></tr>
+            <tr><td>500+ Ksh</td><td>50 Ksh package (250MB)</td></tr>
+        </table>
+    </div>
+
+    <div class="section" id="user-points">
+        <div class="section-label">User Guide</div>
+        <h2>Reward Points</h2>
+        <p>Every time you buy a plan, you earn reward points automatically. No registration required — points are tied to your phone number.</p>
+
+        <div class="card-grid">
+            <div class="card" style="border-color:rgba(255,209,102,0.3)">
+                <div class="card-icon">💰</div>
+                <h4>Earning Points</h4>
+                <p><strong style="color:var(--accent4)">10 Ksh = 1 point.</strong> Points are awarded instantly after every successful M-Pesa payment.</p>
+            </div>
+            <div class="card" style="border-color:rgba(0,229,160,0.3)">
+                <div class="card-icon">🎁</div>
+                <h4>Redeeming Points</h4>
+                <p>Tap "My Points", enter your phone number, and select a reward. OTP required to confirm.</p>
+            </div>
+        </div>
+
+        <h3>Redemption Tiers</h3>
+        <table class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <tr><th>Points</th><th>Free Data</th><th>Valid For</th></tr>
+            <tr><td><span class="badge badge-yellow">50 pts</span></td><td>50 MB</td><td>6 hours</td></tr>
+            <tr><td><span class="badge badge-yellow">100 pts</span></td><td>150 MB</td><td>12 hours</td></tr>
+            <tr><td><span class="badge badge-yellow">200 pts</span></td><td>400 MB</td><td>24 hours</td></tr>
+            <tr><td><span class="badge badge-yellow">500 pts</span></td><td>1 GB</td><td>48 hours</td></tr>
+        </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════════
+         ADMIN GUIDE
+    ══════════════════════════════ -->
+    <div class="section" id="admin-dashboard">
+        <div class="section-label">Admin Guide</div>
+        <h2>Dashboard</h2>
+        <p>Access the admin panel at <code style="color:var(--accent)">/admin/</code> using your superuser credentials. The dashboard shows real-time statistics with 7-day sparkline charts.</p>
+
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">💰</div><h4>Total Revenue</h4><p>Cumulative completed M-Pesa payments with today/week/month breakdown</p></div>
+            <div class="card"><div class="card-icon">👥</div><h4>Total Customers</h4><p>Unique customers who have made at least one payment</p></div>
+            <div class="card"><div class="card-icon">🔄</div><h4>Transactions</h4><p>Completed, pending, and failed M-Pesa transaction counts</p></div>
+            <div class="card"><div class="card-icon">🎫</div><h4>Vouchers</h4><p>Total vouchers issued, active, and used today</p></div>
+        </div>
+    </div>
+
+    <div class="section" id="admin-plans">
+        <div class="section-label">Admin Guide</div>
+        <h2>Managing Plans</h2>
+        <p>Go to <strong>Admin → Hotspot Plans → Add Hotspot Plan</strong></p>
+
+        <table class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <tr><th>Field</th><th>Description</th><th>Example</th></tr>
+            <tr><td><code>plan_name</code></td><td>Display name shown on portal</td><td>1GB Daily</td></tr>
+            <tr><td><code>data_limit_mb</code></td><td>Data in MB (0 = unlimited)</td><td>1024</td></tr>
+            <tr><td><code>validity_minutes</code></td><td>How long the plan lasts</td><td>1440 (= 24 hours)</td></tr>
+            <tr><td><code>price</code></td><td>Cost in Kenyan Shillings</td><td>50.00</td></tr>
+            <tr><td><code>speed_limit</code></td><td>Upload/download speed cap</td><td>3M/3M</td></tr>
+            <tr><td><code>is_active</code></td><td>Whether plan shows on portal</td><td>✓ checked</td></tr>
+        </table>
+    </div>
+
+    <div class="section" id="admin-vouchers">
+        <div class="section-label">Admin Guide</div>
+        <h2>Vouchers</h2>
+        <p>Vouchers are auto-created when a payment completes. You can also create them manually.</p>
+
+        <h3>Voucher Statuses</h3>
+        <table class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <tr><th>Status</th><th>Meaning</th></tr>
+            <tr><td><span class="badge badge-green">Available</span></td><td>Not yet activated — customer hasn't used it yet</td></tr>
+            <tr><td><span class="badge badge-blue">In Use</span></td><td>Activated and currently active on a device</td></tr>
+            <tr><td><span class="badge badge-red">Expired</span></td><td>Validity period has passed</td></tr>
+            <tr><td><span class="badge" style="background:rgba(255,209,102,0.15);color:var(--accent4)">Depleted</span></td><td>Data limit reached</td></tr>
+        </table>
+    </div>
+
+    <div class="section" id="admin-transactions">
+        <div class="section-label">Admin Guide</div>
+        <h2>Transactions</h2>
+        <p>All M-Pesa payments are recorded here. Use the admin actions to manage stuck transactions.</p>
+
+        <h3>Admin Actions</h3>
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">❌</div><h4>Mark as Failed</h4><p>Select pending transactions older than 10 minutes and mark them failed</p></div>
+            <div class="card"><div class="card-icon">🎫</div><h4>Retry Voucher Creation</h4><p>For completed transactions that didn't get a voucher — creates it manually</p></div>
+        </div>
+    </div>
+
+    <div class="section" id="admin-kopa">
+        <div class="section-label">Admin Guide</div>
+        <h2>Kopa Management</h2>
+        <p>Go to <strong>Admin → Kopa Transactions</strong> to see all borrow records.</p>
+
+        <table class="doc-table" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <tr><th>Status</th><th>Meaning</th></tr>
+            <tr><td><span class="badge" style="background:rgba(255,209,102,0.15);color:var(--accent4)">Pending</span></td><td>OTP sent, not confirmed yet</td></tr>
+            <tr><td><span class="badge badge-red">Active</span></td><td>Data borrowed, awaiting repayment</td></tr>
+            <tr><td><span class="badge badge-green">Repaid</span></td><td>Automatically repaid on next purchase</td></tr>
+            <tr><td><span class="badge" style="background:rgba(120,120,120,0.15);color:#888">Expired</span></td><td>OTP was never confirmed</td></tr>
+        </table>
+
+        <div class="alert alert-info"><strong>ℹ️ Admin Action:</strong> Use "Manually Mark as Repaid" to clear a Kopa balance if a customer paid through another channel.</div>
+    </div>
+
+    <div class="section" id="admin-points">
+        <div class="section-label">Admin Guide</div>
+        <h2>Points Ledger</h2>
+        <p>Two admin panels manage the points system:</p>
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">⭐</div><h4>Customer Points</h4><p>Shows total, lifetime earned, and lifetime redeemed per phone number. Sorted by highest points.</p></div>
+            <div class="card"><div class="card-icon">📋</div><h4>Points Ledger</h4><p>Every earn and redeem event with timestamp, description, and linked voucher or transaction.</p></div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════════
+         API REFERENCE
+    ══════════════════════════════ -->
+    <div class="section" id="api-plans">
+        <div class="section-label">API Reference</div>
+        <h2>Plans API</h2>
+        <p>Base URL: <code style="color:var(--accent)">/api/</code> &nbsp; All requests return JSON.</p>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method get">GET</span>
+                <span class="endpoint-path">/api/plans/</span>
+                <span class="endpoint-desc">List all active plans</span>
+            </div>
+            <div class="endpoint-body">
+                <div class="code-block" style="margin-top:0.75rem">
+                    <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Response 200</div>
+                    <pre>{
+  <span class="str">"count"</span>: 4,
+  <span class="str">"results"</span>: [
+    {
+      <span class="str">"plan_name"</span>: <span class="str">"1GB Daily"</span>,
+      <span class="str">"price"</span>: <span class="str">"50.00"</span>,
+      <span class="str">"data_limit_mb"</span>: <span class="num">1024</span>,
+      <span class="str">"data_limit_gb"</span>: <span class="num">1.0</span>,
+      <span class="str">"validity"</span>: <span class="str">"24 hours"</span>,
+      <span class="str">"validity_minutes"</span>: <span class="num">1440</span>,
+      <span class="str">"is_active"</span>: <span class="kw">true</span>
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="api-vouchers">
+        <div class="section-label">API Reference</div>
+        <h2>Vouchers API</h2>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/voucher/enter/</span>
+                <span class="endpoint-desc">Submit phone + voucher code (sends OTP)</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Customer phone e.g. 0712345678</td></tr>
+                <tr><td>voucher_code</td><td>string</td><td><span class="required">required</span></td><td>12-char voucher code from SMS</td></tr></table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/voucher/activate/</span>
+                <span class="endpoint-desc">Verify OTP and activate voucher</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Same number used in enter step</td></tr>
+                <tr><td>voucher_code</td><td>string</td><td><span class="required">required</span></td><td>Same voucher code</td></tr>
+                <tr><td>otp</td><td>string</td><td><span class="required">required</span></td><td>6-digit OTP from SMS</td></tr>
+                <tr><td>mac_address</td><td>string</td><td><span class="optional">optional</span></td><td>Device MAC address</td></tr></table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/voucher/lookup/</span>
+                <span class="endpoint-desc">Find vouchers by phone (sends OTP)</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Customer phone number</td></tr></table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/voucher/check-balance/</span>
+                <span class="endpoint-desc">Check remaining data and time</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Customer phone number</td></tr></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="api-mpesa">
+        <div class="section-label">API Reference</div>
+        <h2>M-Pesa API</h2>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/initiate-mpesa-payment/</span>
+                <span class="endpoint-desc">Trigger STK Push to customer phone</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>07XXXXXXXX format</td></tr>
+                <tr><td>amount</td><td>integer</td><td><span class="required">required</span></td><td>Amount in KSh</td></tr>
+                <tr><td>plan</td><td>string</td><td><span class="required">required</span></td><td>Plan name for reference</td></tr></table>
+                <div class="alert alert-warn" style="margin-top:0.75rem"><strong>⚠️ Kopa Check</strong> This endpoint automatically blocks purchase if the customer has an unpaid Kopa balance.</div>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/mpesa/callback/</span>
+                <span class="endpoint-desc">Safaricom callback (called automatically)</span>
+            </div>
+            <div class="endpoint-body">
+                <p style="font-size:13px;color:var(--muted);margin:0.75rem 0">This endpoint is called by Safaricom's servers — not by your frontend. On success it automatically: updates transaction, repays Kopa, creates voucher, awards points, sends SMS.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="api-otp">
+        <div class="section-label">API Reference</div>
+        <h2>OTP API</h2>
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/otp/verify/</span>
+                <span class="endpoint-desc">Verify a 6-digit OTP code</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Phone that received the OTP</td></tr>
+                <tr><td>code</td><td>string</td><td><span class="required">required</span></td><td>6-digit OTP (expires in 5 min)</td></tr></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="api-kopa">
+        <div class="section-label">API Reference</div>
+        <h2>Kopa API</h2>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/kopa/check/</span>
+                <span class="endpoint-desc">Check eligibility and outstanding balance</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td></tr></table>
+                <div class="code-block" style="margin-top:0.75rem">
+                    <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Response</div>
+                    <pre>{
+  <span class="str">"outstanding_amount"</span>: <span class="num">0</span>,
+  <span class="str">"kopa_status"</span>: <span class="str">"CLEAR"</span>,
+  <span class="str">"kopa_limit"</span>: <span class="num">50</span>,
+  <span class="str">"eligible"</span>: <span class="kw">true</span>,
+  <span class="str">"packages"</span>: [...]
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/kopa/request/</span>
+                <span class="endpoint-desc">Request to borrow data (sends OTP)</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Customer phone</td></tr>
+                <tr><td>amount</td><td>integer</td><td><span class="required">required</span></td><td>10, 20, or 50</td></tr></table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/kopa/confirm/</span>
+                <span class="endpoint-desc">Verify OTP and issue Kopa voucher</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td></tr>
+                <tr><td>otp</td><td>string</td><td><span class="required">required</span></td></tr>
+                <tr><td>amount</td><td>integer</td><td><span class="required">required</span></td></tr></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="api-points">
+        <div class="section-label">API Reference</div>
+        <h2>Points API</h2>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/points/check/</span>
+                <span class="endpoint-desc">Fetch points balance and history</span>
+            </div>
+            <div class="endpoint-body">
+                <div class="code-block" style="margin-top:0.75rem">
+                    <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Response</div>
+                    <pre>{
+  <span class="str">"points"</span>: <span class="num">120</span>,
+  <span class="str">"total_spent"</span>: <span class="num">1200.00</span>,
+  <span class="str">"redeemed_points"</span>: <span class="num">50</span>,
+  <span class="str">"lifetime_earned"</span>: <span class="num">170</span>,
+  <span class="str">"redeem_tiers"</span>: [...],
+  <span class="str">"recent_history"</span>: [...]
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/points/redeem/</span>
+                <span class="endpoint-desc">Initiate redemption (sends OTP)</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td><td>Customer phone</td></tr>
+                <tr><td>points</td><td>integer</td><td><span class="required">required</span></td><td>50, 100, 200, or 500</td></tr></table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method post">POST</span>
+                <span class="endpoint-path">/api/points/redeem/confirm/</span>
+                <span class="endpoint-desc">Verify OTP and issue free voucher</span>
+            </div>
+            <div class="endpoint-body">
+                <table class="param-table"><tr><th>Field</th><th>Type</th><th>Required</th></tr>
+                <tr><td>phone_number</td><td>string</td><td><span class="required">required</span></td></tr>
+                <tr><td>otp</td><td>string</td><td><span class="required">required</span></td></tr>
+                <tr><td>points</td><td>integer</td><td><span class="required">required</span></td></tr></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════════
+         TECHNICAL
+    ══════════════════════════════ -->
+    <div class="section" id="tech-structure">
+        <div class="section-label">Technical Docs</div>
+        <h2>Project Structure</h2>
+        <div class="code-block">
+            <div class="code-header"><div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>Directory tree</div>
+            <pre>final-hotspot-system/
+├── finalHotspot/
+│   ├── <span class="fn">settings.py</span>      <span class="cm">Django configuration</span>
+│   ├── <span class="fn">urls.py</span>          <span class="cm">Main URL routing</span>
+│   └── <span class="fn">wsgi.py</span>
+├── hotspot_api/
+│   ├── <span class="fn">models.py</span>        <span class="cm">All database models</span>
+│   ├── <span class="fn">views.py</span>         <span class="cm">Main API views + M-Pesa callback</span>
+│   ├── <span class="fn">kopa_views.py</span>    <span class="cm">Kopa borrow endpoints</span>
+│   ├── <span class="fn">points_views.py</span>  <span class="cm">Points earn/redeem endpoints</span>
+│   ├── <span class="fn">admin.py</span>         <span class="cm">Custom admin panels</span>
+│   ├── <span class="fn">middleware.py</span>    <span class="cm">Dark sidebar injection</span>
+│   ├── <span class="fn">signals.py</span>       <span class="cm">Auto-credit customer on payment</span>
+│   ├── <span class="fn">sms_utils.py</span>     <span class="cm">Africa's Talking SMS helpers</span>
+│   ├── <span class="fn">serializers.py</span>   <span class="cm">DRF serializers</span>
+│   └── <span class="fn">urls.py</span>          <span class="cm">API URL routing</span>
+├── <span class="fn">index.html</span>           <span class="cm">Customer hotspot portal (single file)</span>
+├── <span class="fn">Procfile</span>             <span class="cm">Railway/Heroku start command</span>
+├── <span class="fn">runtime.txt</span>          <span class="cm">Python version for Railway</span>
+├── <span class="fn">requirements.txt</span>     <span class="cm">All Python dependencies</span>
+└── <span class="fn">.env</span>                 <span class="cm">Secrets (never committed)</span></pre>
+        </div>
+    </div>
+
+    <div class="section" id="tech-models">
+        <div class="section-label">Technical Docs</div>
+        <h2>Database Models</h2>
+
+        <div class="model-card">
+            <div class="model-header"><h4>HotspotPlan</h4><p>Wi-Fi plans available for purchase</p></div>
+            <table class="param-table" style="margin:0;"><tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+            <tr><td>plan_name</td><td>CharField</td><td>Unique display name</td></tr>
+            <tr><td>price</td><td>Decimal</td><td>Cost in KSh</td></tr>
+            <tr><td>data_limit_mb</td><td>Integer</td><td>0 = unlimited</td></tr>
+            <tr><td>validity_minutes</td><td>Integer</td><td>1440 = 24 hours</td></tr>
+            <tr><td>is_active</td><td>Boolean</td><td>Shows on portal if True</td></tr></table>
+        </div>
+
+        <div class="model-card">
+            <div class="model-header"><h4>Voucher</h4><p>Generated access codes</p></div>
+            <table class="param-table" style="margin:0;"><tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+            <tr><td>code</td><td>CharField</td><td>Auto-generated 12-char unique code</td></tr>
+            <tr><td>phone_number</td><td>CharField</td><td>Linked customer phone (254XXXXXXXXX)</td></tr>
+            <tr><td>used_at</td><td>DateTime</td><td>Null = not yet activated</td></tr>
+            <tr><td>expiry_date</td><td>DateTime</td><td>When the voucher expires</td></tr>
+            <tr><td>data_limit_mb</td><td>Integer</td><td>Null = unlimited</td></tr></table>
+        </div>
+
+        <div class="model-card">
+            <div class="model-header"><h4>KopaTransaction</h4><p>Data borrowing records</p></div>
+            <table class="param-table" style="margin:0;"><tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+            <tr><td>amount_ksh</td><td>Decimal</td><td>Principal borrow amount</td></tr>
+            <tr><td>fee_ksh</td><td>Decimal</td><td>Convenience fee</td></tr>
+            <tr><td>status</td><td>CharField</td><td>PENDING / ACTIVE / REPAID / EXPIRED</td></tr>
+            <tr><td>repaid_via</td><td>FK → MpesaTransaction</td><td>Which payment cleared the Kopa</td></tr></table>
+        </div>
+
+        <div class="model-card">
+            <div class="model-header"><h4>CustomerPoints</h4><p>Running points balance per phone</p></div>
+            <table class="param-table" style="margin:0;"><tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+            <tr><td>total_points</td><td>Integer</td><td>Current available balance</td></tr>
+            <tr><td>lifetime_earned</td><td>Integer</td><td>All-time points earned</td></tr>
+            <tr><td>lifetime_redeemed</td><td>Integer</td><td>All-time points spent</td></tr>
+            <tr><td>total_spent_ksh</td><td>Decimal</td><td>Cumulative spend (for earning calculation)</td></tr></table>
+        </div>
+    </div>
+
+    <div class="section" id="tech-flow">
+        <div class="section-label">Technical Docs</div>
+        <h2>Payment Flow</h2>
+        <p>What happens when a customer pays:</p>
+        <div class="flow">
+            <div class="flow-item"><div class="flow-icon">1️⃣</div><div class="flow-body"><h4>Frontend calls <code>/api/initiate-mpesa-payment/</code></h4><p>Checks for unpaid Kopa first. If clear, sends STK Push to Safaricom.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">2️⃣</div><div class="flow-body"><h4>MpesaTransaction saved as PENDING</h4><p>Stores CheckoutRequestID to match the callback later.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">3️⃣</div><div class="flow-body"><h4>Customer enters M-Pesa PIN on phone</h4><p>Safaricom processes the payment on their side.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">4️⃣</div><div class="flow-body"><h4>Safaricom calls <code>/api/mpesa/callback/</code></h4><p>Our server receives confirmation with receipt number and amount.</p></div></div>
+            <div class="flow-item"><div class="flow-icon">5️⃣</div><div class="flow-body"><h4>Atomic transaction block runs</h4><p>1. Updates transaction to COMPLETED &nbsp; 2. Repays any Kopa &nbsp; 3. Creates voucher &nbsp; 4. Awards points</p></div></div>
+            <div class="flow-item"><div class="flow-icon">6️⃣</div><div class="flow-body"><h4>SMS sent to customer</h4><p>Voucher code, plan details, and points earned notification all sent via Africa's Talking.</p></div></div>
+        </div>
+
+        <div class="alert alert-success" style="margin-top:1.5rem">
+            <strong>✅ All steps are atomic</strong>
+            If any step fails (e.g. voucher creation error), the database transaction rolls back and no partial state is saved. This prevents double-charging or vouchers being created without payment.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:3rem 0 1rem;border-top:1px solid var(--border);text-align:center;">
+        <p style="color:var(--muted);font-size:13px;">KiRePa Wi-Fi Hotspot System &nbsp;·&nbsp; Built by <a href="https://github.com/patomurgong" style="color:var(--accent);text-decoration:none;">@patomurgong</a> &nbsp;·&nbsp; Support: <a href="tel:0792701147" style="color:var(--accent);text-decoration:none;">0792701147</a></p>
+    </div>
+
+    </div><!-- end .content -->
+</main>
+
+<script>
+function toggle(header) {
+    const body = header.nextElementSibling;
+    body.classList.toggle('open');
+}
+
+// Active sidebar link on scroll
+const sections = document.querySelectorAll('.section');
+const links = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    links.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+    });
+}, { passive: true });
+</script>
+</body>
+</html>

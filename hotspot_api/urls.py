@@ -68,5 +68,4 @@ urlpatterns = [
     path('points/check/',          points_views.points_check,          name='points-check'),
     path('points/redeem/',         points_views.points_redeem,         name='points-redeem'),
     path('points/redeem/confirm/', points_views.points_redeem_confirm, name='points-redeem-confirm'),
-    path('customers/top/', views.top_customers, name='top-customers'),
-]
+   ]
