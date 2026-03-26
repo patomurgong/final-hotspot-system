@@ -14,7 +14,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure--h99c%q12y#ja7s-f^o01
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Get current ngrok URL from environment
-NGROK_URL = config('NGROK_URL', default='https://15fb-129-222-147-163.ngrok-free.app')
+NGROK_URL = config('NGROK_URL', default='https://e46d-102-68-78-245.ngrok-free.app')
 
 # ✅ UPDATED: Explicitly allowed your local IP and ngrok
 ALLOWED_HOSTS = [
